@@ -1,0 +1,11 @@
+{
+  "version": 6,
+  "configurePresets": [
+    { "name": "dev", "generator": "Ninja", "binaryDir": "${sourceDir}/build",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug", "JIG_WARNINGS_AS_ERRORS": "ON" } },
+    { "name": "release", "generator": "Ninja", "binaryDir": "${sourceDir}/build-release",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release", "JIG_STATIC": "ON" } }
+  ],
+  "buildPresets": [ { "name": "dev", "configurePreset": "dev" }, { "name": "release", "configurePreset": "release" } ],
+  "testPresets": [ { "name": "dev", "configurePreset": "dev", "output": { "outputOnFailure": true } } ]
+}

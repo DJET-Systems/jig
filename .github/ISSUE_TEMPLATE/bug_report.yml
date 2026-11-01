@@ -1,0 +1,41 @@
+name: Bug report
+description: Report a reproducible problem with jig.
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: Before submitting, check the documentation and search existing issues.
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Include the command, a minimal project or manifest, and relevant output.
+      render: text
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: jig version
+      placeholder: "jig version"
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: Operating system and architecture
+      placeholder: "Linux x86_64"
+    validations:
+      required: true

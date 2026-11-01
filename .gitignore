@@ -1,0 +1,4 @@
+build/
+build-*/
+.jig/
+compile_commands.json

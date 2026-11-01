@@ -1,0 +1,27 @@
+# SPDX-License-Identifier: GPL-3.0-only
+name: ci
+on: [push, pull_request]
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: ubuntu-24.04, cxx: g++ }
+          - { os: ubuntu-24.04, cxx: clang++ }
+          - { os: macos-14,     cxx: clang++ }
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y ninja-build cmake clang clang-format
+      - name: Install tools (macOS)
+        if: runner.os == 'macOS'
+        run: brew install ninja cmake
+      - name: Configure
+        run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=${{ matrix.cxx }} -DJIG_WARNINGS_AS_ERRORS=ON
+      - name: Build
+        run: cmake --build build
+      - name: Test (unit + end to end)
+        run: ctest --test-dir build --output-on-failure
