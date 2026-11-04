@@ -54,7 +54,7 @@ struct Manifest {
     std::string vendor = "llvm";  // llvm | system   (llvm is not available in this build)
     VersionSpec toolchain_version;
     std::optional<std::string> hermeticity;  // h0 .. h3 (minimum)
-    std::string tool_cmake = "3";
+    std::string tool_cmake = ">=3.20,<5";
     std::string tool_ninja = "1";
     std::string sys_cc;   // [toolchain.system] cc
     std::string sys_cxx;  // [toolchain.system] cxx
