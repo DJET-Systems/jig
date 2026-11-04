@@ -21,6 +21,12 @@ expect_exit() { # expect_exit N description command...
   else printf '  FAIL  %s (wanted exit %s, got %s)\n' "$d" "$want" "$got"; sed 's/^/        | /' "$WORK/out.txt" | tail -15; failn=$((failn+1)); fi
 }
 contains() { grep -q -- "$1" "$WORK/out.txt"; }
+replace_in_file() {
+  local expression="$1" file="$2" tmp="$2.tmp"
+  if sed "$expression" "$file" >"$tmp" && mv "$tmp" "$file"; then return 0; fi
+  rm -f "$tmp"
+  return 1
+}
 
 cd "$WORK"
 echo "jig e2e in $WORK"
@@ -64,7 +70,7 @@ if [ -s "$WORK/json.txt" ] && ! grep -vq '^{' "$WORK/json.txt" && tail -1 "$WORK
 else echo "  FAIL  --json output"; head -5 "$WORK/json.txt"; failn=$((failn+1)); fi
 
 # --- staleness ---------------------------------------------------------------
-sed -i 's/version  = "0.1.0"/version  = "0.2.0"/' jig.toml
+replace_in_file 's/version  = "0.1.0"/version  = "0.2.0"/' jig.toml || exit 1
 expect_exit 3 "stale lock + --locked is DJ1103" "$JIG" --locked build
 contains "DJ1103" || { echo "  FAIL  DJ1103 text missing"; failn=$((failn+1)); }
 t "lock refreshes"              "$JIG" lock
@@ -72,7 +78,7 @@ t "build after relock"          "$JIG" build
 
 # --- bad manifests -----------------------------------------------------------
 cp jig.toml jig.toml.bak
-sed -i 's/^warnings = /warnigns = /' jig.toml
+replace_in_file 's/^warnings = /warnigns = /' jig.toml || exit 1
 expect_exit 3 "typo in jig.toml is DJ1003" "$JIG" build
 contains "build.warnings" || { echo "  FAIL  did-you-mean missing"; failn=$((failn+1)); }
 mv jig.toml.bak jig.toml
