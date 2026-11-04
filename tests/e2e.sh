@@ -104,6 +104,12 @@ cd "$WORK/hdr" || exit 1; t "header-only test"    "$JIG" test; cd "$WORK"
 # --- refuses a non-empty directory -------------------------------------------
 mkdir busy && echo x > busy/file
 expect_exit 1 "init into a non-empty dir is DJ6001" "$JIG" init busy --lang c --std c11 --toolchain gcc -y
+printf 'existing executable\n' > occupied
+expect_exit 1 "init into a file is DJ6001" "$JIG" init occupied --lang c --std c11 --toolchain gcc -y
+contains "The path is not a directory" || { echo "  FAIL  non-directory path explanation missing"; failn=$((failn+1)); }
+grep -q '^existing executable$' occupied \
+  && { echo "  ok    init preserved the existing file"; pass=$((pass+1)); } \
+  || { echo "  FAIL  init changed the existing file"; failn=$((failn+1)); }
 t "clean"                       bash -c "cd '$WORK/hello' && '$JIG' clean"
 
 echo
