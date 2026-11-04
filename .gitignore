@@ -2,3 +2,4 @@ build/
 build-*/
 .jig/
 compile_commands.json
+DJET_visual_identity
