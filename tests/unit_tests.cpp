@@ -86,6 +86,10 @@ TEST(version_specs) {
     CHECK(!m("~13.3", "13.4.0"));
     CHECK(m(">=12,<15", "14.2.0"));
     CHECK(!m(">=12,<15", "15.0.0"));
+    CHECK(m(">=3.20,<5", "3.20.0"));
+    CHECK(m(">=3.20,<5", "4.4.3"));
+    CHECK(!m(">=3.20,<5", "3.19.9"));
+    CHECK(!m(">=3.20,<5", "5.0.0"));
     CHECK(!VersionSpec::parse("banana"));
     CHECK(!VersionSpec::parse(">="));
     CHECK(!VersionSpec::parse(""));
@@ -162,6 +166,10 @@ TEST(manifest_valid_minimal) {
         CHECK(m->name == "hello");
         CHECK(m->kind == "exe");
         CHECK(m->vendor == "llvm");  // spec default
+        auto cmake = VersionSpec::parse(m->tool_cmake);
+        CHECK(cmake && cmake->matches(*parse_version("4.4.3")));
+        CHECK(cmake && !cmake->matches(*parse_version("3.19.9")));
+        CHECK(cmake && !cmake->matches(*parse_version("5.0.0")));
         CHECK(m->digest.size() == 64);
     }
 }

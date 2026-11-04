@@ -64,7 +64,7 @@ Intent flows down, never up. The only way jig writes `jig.toml` is through comma
 | `vendor` | enum | `llvm` | `llvm` or `system`. v0.3 adds `zig`. |
 | `version` | version spec | `latest` | Section 4. Ignored for `system` unless a version check is wanted. |
 | `hermeticity` | enum | `h1` for `llvm`, `h0` for `system` | Minimum acceptable level. A build below it fails with `DJ2301`. |
-| `tools.cmake` | version spec | `3` | |
+| `tools.cmake` | version spec | `>=3.20,<5` | |
 | `tools.ninja` | version spec | `1` | |
 | `tools.clang-format` | version spec or `"bundled"` | `"bundled"` | Uses the one inside the LLVM toolchain. |
 | `system.cc`, `system.cxx` | path or name | detected | Only with `vendor = "system"`. |

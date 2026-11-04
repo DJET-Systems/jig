@@ -19,7 +19,7 @@ The contract for `jig.toml`, `jig.lock` and `config.toml`. Unknown keys are erro
 | `toolchain.vendor` | enum | `llvm` | `llvm` `system` |
 | `toolchain.version` | spec | `latest` | `20`, `20.1`, `20.1.8`, `^20`, `~20.1`, `>=18,<21`, `latest` |
 | `toolchain.hermeticity` | enum | `h1` (llvm), `h0` (system) | minimum level |
-| `toolchain.tools.cmake` | spec | `3` | |
+| `toolchain.tools.cmake` | spec | `>=3.20,<5` | |
 | `toolchain.tools.ninja` | spec | `1` | |
 | `toolchain.tools.clang-format` | spec or `"bundled"` | `"bundled"` | |
 | `toolchain.system.cc`, `.cxx` | string | detected | only with `vendor = "system"` |
