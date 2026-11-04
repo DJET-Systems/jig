@@ -80,7 +80,11 @@ bool in_git_repo(const fs::path& dir) {
 Result<void> run_init(const Settings& s, Ui& ui, const InitOptions& o) {
     std::error_code ec;
     const bool can_ask = s.interactive && stdin_is_tty() && !s.yes && !s.json;
-    auto dir = fs::absolute(o.dir, ec).lexically_normal();
+    auto dir = fs::absolute(o.dir, ec);
+    if (ec)
+        return fail("DJ9000", exit_code::failure, "cannot resolve project directory " + o.dir.string(), {},
+                    {ec.message()});
+    dir = dir.lexically_normal();
     if (dir.filename().empty()) dir = dir.parent_path();
 
     // 1. Name and directory.
@@ -89,10 +93,33 @@ Result<void> run_init(const Settings& s, Ui& ui, const InitOptions& o) {
     if (!std::regex_match(name, name_re))
         return fail("DJ6002", exit_code::usage, "Invalid project name \"" + name + "\"", "Use [a-z][a-z0-9_-]{0,63}, or pass `--name`.");
 
-    if (fs::exists(dir, ec)) {
+    const bool dir_exists = fs::exists(dir, ec);
+    if (ec)
+        return fail("DJ9000", exit_code::failure, "cannot inspect project path " + dir.string(), {}, {ec.message()});
+    if (dir_exists) {
+        if (!fs::is_directory(dir, ec)) {
+            if (ec)
+                return fail("DJ9000", exit_code::failure, "cannot inspect project path " + dir.string(), {},
+                            {ec.message()});
+            return fail("DJ6001", exit_code::failure, "The path is not a directory: " + dir.string(),
+                        "Choose a directory path, or move the existing file.");
+        }
+        if (ec)
+            return fail("DJ9000", exit_code::failure, "cannot inspect project path " + dir.string(), {}, {ec.message()});
+
         bool empty = true;
-        for (auto& e : fs::directory_iterator(dir, ec))
+        fs::directory_iterator entry(dir, ec), end;
+        if (ec)
+            return fail("DJ9000", exit_code::failure, "cannot read project directory " + dir.string(), {}, {ec.message()});
+        for (; entry != end; entry.increment(ec)) {
+            if (ec)
+                return fail("DJ9000", exit_code::failure, "cannot read project directory " + dir.string(), {},
+                            {ec.message()});
+            auto& e = *entry;
             if (e.path().filename() != ".git") empty = false;
+        }
+        if (ec)
+            return fail("DJ9000", exit_code::failure, "cannot read project directory " + dir.string(), {}, {ec.message()});
         if (!empty && !o.force)
             return fail("DJ6001", exit_code::failure, "The directory is not empty: " + dir.string(), "Use `--force` to write the project files anyway.");
     }
@@ -242,6 +269,8 @@ Result<void> run_init(const Settings& s, Ui& ui, const InitOptions& o) {
     ui.step("Creating project");
     ui.decision("project", name, {language + " " + std + ", " + kind + ", " + chosen->label()});
     fs::create_directories(dir, ec);
+    if (ec)
+        return fail("DJ9000", exit_code::failure, "cannot create directory " + dir.string(), {}, {ec.message()});
     for (const auto& [rel, content] : files) {
         auto p = dir / rel;
         if (fs::exists(p) && !o.force) return fail("DJ6001", exit_code::failure, "Refusing to overwrite " + rel, "Use `--force`.");
