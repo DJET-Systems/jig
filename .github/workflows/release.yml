@@ -64,6 +64,19 @@ jobs:
           set -euo pipefail
           sha256sum "jig-${VERSION}.tar.gz" > SHA256SUMS
 
+      - name: Release notes from the changelog
+        run: |
+          set -euo pipefail
+          # Keep a Changelog: notes are the `## [<version>]` section.
+          awk -v ver="$VERSION" '
+            $0 ~ "^## \\[" ver "\\]($| )"   { on=1; next }
+            on && /^## /                    { exit }
+            on                              { print }
+          ' CHANGELOG.md > NOTES.md
+          if [ ! -s NOTES.md ]; then
+            echo "CHANGELOG.md has no section for $VERSION; the release will use generated notes." >&2
+          fi
+
       - name: Publish the release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -71,12 +84,14 @@ jobs:
           set -euo pipefail
           PRERELEASE=""
           if [ "$TAG" != "v${VERSION%%-*}" ]; then PRERELEASE="--prerelease"; fi
+          NOTES="--generate-notes"
+          if [ -s NOTES.md ]; then NOTES="--notes-file NOTES.md"; fi
           gh release create "$TAG" \
             "jig-${VERSION}.tar.gz" \
             SHA256SUMS \
             --verify-tag \
             --title "jig $VERSION" \
-            --generate-notes \
+            $NOTES \
             $PRERELEASE
 
       - name: Remove the staging tree
