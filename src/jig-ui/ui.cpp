@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-only
 #include "jig-ui/ui.hpp"
 
 // The renderers test the event variant with `if (auto* x = get_if<...>) ... else if (auto* x = ...)`;

@@ -3,7 +3,7 @@
 Thank you for helping. jig favours small, reviewed, tested changes.
 
 By submitting a contribution, you agree that it may be distributed under this
-project's [GPL-3.0-only license](LICENSE). You must have the right to submit it.
+project's [AGPL-3.0-only license](LICENSE). You must have the right to submit it.
 There is no separate contributor license agreement (CLA). Third-party code must
 be identified with its source and license before it is proposed; do not replace
 or remove existing third-party notices.

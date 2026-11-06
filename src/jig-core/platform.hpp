@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-only
 // jig-core/platform.hpp
 // Host facts, environment access, directories and filesystem helpers.
 // v0.1 slice: POSIX only (Linux, macOS). Windows is planned (see docs/blueprint/005).

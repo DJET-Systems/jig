@@ -1,7 +1,7 @@
 # Third-party notices
 
 The project-authored material in this repository is licensed under
-[GPL-3.0-only](LICENSE). These terms do not replace or alter the licenses of
+[AGPL-3.0-only](LICENSE). These terms do not replace or alter the licenses of
 third-party components distributed with jig.
 
 | Component | License | License text |

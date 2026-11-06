@@ -100,7 +100,7 @@ Hosting needs only static files and correct MIME types (`.json`, `.sig`, `.sh`, 
 ## 8. Release checklist (v0.1.0)
 
 1. [ ] All phase acceptance criteria 001 to 008 met on tier-1 platforms.
-2. [ ] Include the GPL-3.0-only license and all applicable third-party notices in source and binary releases.
+2. [ ] Include the AGPL-3.0-only license and all applicable third-party notices in source and binary releases.
 3. [ ] Trademark and name search for "jig" completed (the word is common; check GitHub, package registries and trademark databases for developer tools using it, and document how jig is distinct). [OWNER]
 4. [ ] Keys generated offline: root key, day-to-day index key, release key; public halves embedded; private halves stored per the key-custody note in `SECURITY.md`. [OWNER]
 5. [ ] Apple Developer ID and notarisation set up; Windows code-signing decided (unsigned builds trigger SmartScreen). [OWNER]

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-only
 // jig: the native C/C++ toolchain.  https://djet.online/jig
 // main() only parses the command line (CLI11), builds Settings and dispatches (001 section 8).
 #include <CLI11.hpp>
@@ -185,7 +185,7 @@ int main(int argc, char** argv) {
         auto* ex = app.add_subcommand("exec", "Run any command inside the environment:  jig exec -- cc --version");
         ex->add_option("command", argvs, "Command and arguments")->expected(-1);
         ex->prefix_command();
-        ex->callback([&] {
+        ex->callback([&, ex] {
             auto all = argvs;
             for (auto& r : ex->remaining()) all.push_back(r);
             run([&](auto& s, auto& ui) { return cmd::exec(s, ui, all); });

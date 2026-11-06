@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-only
 // jig-ui/ui.hpp
 // The only library that prints (001 section 8). Other libraries emit typed events;
 // this one renders them as narrated text, terse text, or JSON lines (002 section 4).

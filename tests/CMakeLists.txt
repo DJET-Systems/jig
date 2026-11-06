@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: GPL-3.0-only
+# SPDX-License-Identifier: AGPL-3.0-only
 add_executable(jig-tests unit_tests.cpp)
 target_link_libraries(jig-tests PRIVATE jig-core jig-ui jig-env jig-build jig-init jig-warnings)
 add_test(NAME unit COMMAND jig-tests)

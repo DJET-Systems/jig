@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-only
 // jig-init/init.hpp
 // `jig init`: ask (or be told) language, standard, compiler and kind; write the project; lock and sync it.
 #pragma once

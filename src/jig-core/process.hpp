@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-only
 // jig-core/process.hpp
 // Spawn child processes. Only jig-build and jig-env use this (001 section 8).
 #pragma once

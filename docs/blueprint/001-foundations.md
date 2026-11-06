@@ -79,7 +79,7 @@ Decisions already taken. A coding agent must follow them. A change needs a new r
 | D-003 | Toolchains come from a **signed index** owned by DJET, not from scraping upstream pages at runtime. | Pinned hashes, key rotation, offline mirroring, no fragile name parsing in the client. | Costly |
 | D-004 | The store is content-addressed by the sha256 of the downloaded archive. | Dedup, integrity, simple prune. | Costly |
 | D-005 | Project state lives in `jig.toml`, `jig.lock`, `.jig/`. User state lives in `JIG_HOME`. | Order. | Costly |
-| D-006 | Project-authored material is licensed under **GPL-3.0-only**. Vendored dependencies retain their own licenses and notices. | The project is distributed under the GNU GPL version 3 only; dependency terms remain independent. | Yes |
+| D-006 | Project-authored material is licensed under **AGPL-3.0-only**. Vendored dependencies retain their own licenses and notices. | The project is distributed under the GNU GPL version 3 only; dependency terms remain independent. | Yes |
 | D-007 | Default output is narrated and verbose. `--terse` and `-q` reduce it. | The product promise is clarity. | Yes |
 | D-008 | Error identifiers `DJxxxx` are stable once released. | Searchability, docs, support. | No |
 | D-009 | v0.1 does not bundle the Windows SDK or the macOS SDK. It detects them and fails with an actionable message. | Licensing and size. | Yes |

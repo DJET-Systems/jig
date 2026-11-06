@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-only
 // jig-env/toolchain.hpp
 // Toolchain providers. This build has one: `system` (detect compilers on PATH, record them, H0).
 // The `llvm` provider (signed index, download, store, H1) is specified in docs/blueprint/004

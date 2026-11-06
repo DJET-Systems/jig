@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-only
 // jig-env/project.hpp
 // "Get this project ready": find jig.toml, make sure jig.lock is current, make sure .jig/env matches it.
 // Every command that builds or runs something starts here.

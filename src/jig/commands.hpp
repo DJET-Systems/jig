@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-only
 // jig/commands.hpp
 // One function per command. Each returns the process exit code and reports its own errors.
 #pragma once

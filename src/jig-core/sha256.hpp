@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-only
 // jig-core/sha256.hpp
 // Small SHA-256 (FIPS 180-4). Used for the manifest digest, lock contents and toolchain identity.
 // The signed-index verification planned in 004 will use a vetted crypto library (libsodium), not this.

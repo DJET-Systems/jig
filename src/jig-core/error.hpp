@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-only
 // jig-core/error.hpp
 // One error type for the whole tool. No exception crosses a library boundary (001 D-014).
 #pragma once

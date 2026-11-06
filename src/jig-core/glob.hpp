@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-only
 // jig-core/glob.hpp
 // Source globs: `*`, `?`, `**` (any number of directories) and `{a,b}` alternatives.
 // Paths use '/' separators and are relative to the project root.

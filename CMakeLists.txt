@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: GPL-3.0-only
+# SPDX-License-Identifier: AGPL-3.0-only
 cmake_minimum_required(VERSION 3.20)
 project(jig VERSION 0.1.0 LANGUAGES CXX)
 

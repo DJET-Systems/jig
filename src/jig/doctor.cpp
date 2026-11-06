@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-only
 // jig doctor (docs/blueprint/008): say what is true about this machine and project, and what would improve it.
 #include <sys/stat.h>
 #include <unistd.h>

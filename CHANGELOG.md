@@ -5,7 +5,7 @@ All notable changes are listed here. The format follows [Keep a Changelog](https
 ## [Unreleased]
 
 ### Changed
-- Adopt GPL-3.0-only for project-authored code and document third-party license boundaries.
+- Adopt AGPL-3.0-only for project-authored code and document third-party license boundaries.
 
 ### Added
 - Product specification, reference sheets, user documentation and the phased build plan (001 to 012).

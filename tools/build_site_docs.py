@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: GPL-3.0-only
+# SPDX-License-Identifier: AGPL-3.0-only
 # Build the jig documentation book: docs/ -> static HTML in site/docs/.
 # Hand-rolled on purpose: standard library only, no markdown dependency.
 import html

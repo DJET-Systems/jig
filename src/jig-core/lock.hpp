@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-only
 // jig-core/lock.hpp
 // jig.lock (reference/manifest.md S9). Written by jig, never by hand.
 // In this build the only provider is `system`, so the lock records exactly which compiler on this

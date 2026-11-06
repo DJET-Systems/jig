@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-only
 // jig-core/settings.hpp
 // Resolved global settings (002 section 3): flags first, then environment variables, then defaults.
 #pragma once

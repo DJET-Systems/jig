@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-only
 // jig-build/cmakegen.hpp
 // The `generated` backend (docs/blueprint/007): jig.toml -> .jig/gen/<profile>/CMakeLists.txt.
 // Sources are expanded by jig, not by CMake globs, so the generated file lists every file explicitly

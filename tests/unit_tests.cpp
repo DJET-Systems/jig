@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-only
 // Unit tests. A tiny harness on purpose (no framework dependency in the slice); Catch2 is the plan (011).
 #include <unistd.h>
 

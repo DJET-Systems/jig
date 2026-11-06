@@ -4,7 +4,7 @@ Everything needed to create the repository and its public surfaces. Copy the val
 
 ## License
 
-Project-authored material: `GPL-3.0-only` (`LICENSE`). Vendored dependencies
+Project-authored material: `AGPL-3.0-only` (`LICENSE`). Vendored dependencies
 retain their own terms, summarized in `THIRD_PARTY_NOTICES.md` and documented in
 their respective `third_party/*/LICENSE` files.
 
@@ -31,7 +31,7 @@ The name is a workshop term. A jig holds the work in place and guides the tool, 
 
 (Length: 226 characters.)
 
-**GitHub license:** `GPL-3.0-only`.
+**GitHub license:** `AGPL-3.0-only`.
 
 ## Short description (package registries, social cards)
 
@@ -51,7 +51,7 @@ Black field (`#0b0b0c`). DJET mark (white) at left, `jig` set very large in the 
 jig/
   README.md
   REPO.md                      this file
-  LICENSE                      GPL-3.0-only for project-authored material
+  LICENSE                      AGPL-3.0-only for project-authored material
   THIRD_PARTY_NOTICES.md       vendored dependencies and their licenses
   CHANGELOG.md
   CONTRIBUTING.md

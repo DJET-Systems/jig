@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-only
 // jig-core/tomledit.hpp
 // Minimal, comment-preserving edits of jig.toml. A real TOML round trip would drop comments,
 // so `toolchain use` and `toolchain pin` patch the text instead.

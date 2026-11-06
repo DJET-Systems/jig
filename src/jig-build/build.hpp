@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-only
 // jig-build/build.hpp
 // build, run, test, clean, fmt and exec. Only this library and jig-env spawn compilers (001 section 8).
 #pragma once

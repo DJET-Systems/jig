@@ -60,7 +60,7 @@ Durations assume one experienced developer working with a coding agent. They are
 
 ## 4. Open decisions for the owner
 
-License decision D-006 is closed: project-authored material uses GPL-3.0-only.
+License decision D-006 is closed: project-authored material uses AGPL-3.0-only.
 Vendored dependencies remain under their respective licenses.
 
 | # | Decision | Needed by | Default if no answer |

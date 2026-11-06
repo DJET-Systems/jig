@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-only
 // jig-init/templates.hpp
 // File contents for `jig init` (docs/blueprint/006). Templates are plain functions here so they can be
 // unit tested; a template directory with substitution is planned for a later release.
