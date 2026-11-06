@@ -16,7 +16,14 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   set(CMAKE_BUILD_TYPE Release CACHE STRING "" FORCE)
 endif()
 
-set(JIG_VERSION_STRING "${PROJECT_VERSION}-dev")
+# The reported version gets a -dev suffix in development trees. Packagers configuring
+# from the source tarball stamp JIG_RELEASE_VERSION to match the release exactly
+# (docs/reference/versioning.md).
+if(DEFINED ENV{JIG_RELEASE_VERSION} AND NOT "$ENV{JIG_RELEASE_VERSION}" STREQUAL "")
+  set(JIG_VERSION_STRING "$ENV{JIG_RELEASE_VERSION}")
+else()
+  set(JIG_VERSION_STRING "${PROJECT_VERSION}-dev")
+endif()
 add_compile_definitions(JIG_VERSION="${JIG_VERSION_STRING}")
 
 # Warnings apply to jig's own targets only, not to the vendored single headers.

@@ -4,15 +4,21 @@ How jig reaches distributions beyond the release archive. The release archive is
 of truth; every package below points at it and re-verifies it. Nothing in the store is the
 upstream: always install through the pinned hash if you care about provenance.
 
+Templates for every channel live in `packaging/` ([read its README](../../packaging/README.md)):
+the AUR `PKGBUILD`, the Homebrew formula, the Debian source packaging, the Snap fixture.
+The versioning sheet ([versioning.md](versioning.md)) builds the tarball and checksum all
+of them consume.
+
 ## Status
 
 | Channel | When | Owner of the recipe |
 |---|---|---|
 | GitHub Releases + `install.sh` / `install.ps1` | 0.1 | jig (official) |
-| AUR (`jig`, `jig-bin`) | 0.1 | community, blessed recipe kept here |
-| PPA (`ppa:djet/jig`, Ubuntu) | 0.1–0.2 | jig |
-| COPR (`djet/jig`, Fedora) | 0.1–0.2 | jig |
-| Snap (classic confinement) | 0.2 | jig |
+| AUR (`jig`, `jig-bin`) | 0.1 | recipe in `packaging/aur/`, community push |
+| Homebrew (tap `ansgrb/jig`) | 0.1–0.2 | formula template in `packaging/homebrew/` |
+| PPA (`ppa:djet/jig`, Ubuntu) | 0.1–0.2 | Debian skeleton in `packaging/deb/debian/` |
+| COPR (`djet/jig`, Fedora) | 0.1–0.2 | spec in `packaging/rpm/` (when the rpm starts) |
+| Snap (classic confinement) | 0.2 | `packaging/snap/snapcraft.yaml` |
 | Gemfury (turnkey apt/rpm repo) | fallback, only if self-hosting the apt repo slips | jig |
 | Debian, Fedora, homebrew-core, winget official | after adoption | the distributions |
 

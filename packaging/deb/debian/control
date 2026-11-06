@@ -1,0 +1,19 @@
+Source: jig
+Section: devel
+Priority: optional
+Maintainer: DJET Systems <TODO@djet.online>
+Build-Depends: debhelper-compat (= 13), cmake, ninja-build, g++ (>= 4:14.1)
+Standards-Version: 4.7.0
+Homepage: https://djet.online/jig
+Vcs-Browser: https://github.com/ansgrb/jig
+Vcs-Git: https://github.com/ansgrb/jig.git
+Rules-Requires-Root: no
+
+Package: jig
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: the native C/C++ toolchain
+ Pin the compiler. Pick the standard. Build in an environment that belongs
+ to the project. jig creates C/C++ projects after you choose the language,
+ the standard and the compiler version, and builds them inside an
+ environment that lives in the project folder.

@@ -1,0 +1,27 @@
+# Snap package for jig (publishes with jig 0.2, docs/reference/packaging.md).
+# Classic confinement on purpose: a toolchain must see the user's toolchain
+# paths for jig shell, jig exec and the project environment to work.
+name: jig
+base: core24
+version: "0.1.0"
+summary: The native C/C++ toolchain
+description: |
+  Pin the compiler. Pick the standard. Build in an environment that belongs
+  to the project. jig creates C/C++ projects after you choose the language,
+  the standard and the compiler version, and builds them inside an
+  environment that lives in the project folder.
+grade: stable
+confinement: classic
+
+apps:
+  jig:
+    command: bin/jig
+
+parts:
+  jig:
+    plugin: cmake
+    source: https://github.com/ansgrb/jig/releases/download/v0.1.0/jig-0.1.0.tar.gz
+    cmake-parameters:
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DJIG_BUILD_TESTS=OFF
+      - -DJIG_STATIC=ON

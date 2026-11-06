@@ -1,0 +1,13 @@
+pkgbase = jig
+pkgver = 0.1.0
+pkgrel = 1
+pkgdesc = The native C/C++ toolchain: pin the compiler, pick the standard, build in an environment that belongs to the project
+url = https://github.com/ansgrb/jig
+arch = x86_64
+arch = aarch64
+license = AGPL3
+depends = glibc
+makedepends = cmake
+makedepends = ninja
+
+pkgname = jig

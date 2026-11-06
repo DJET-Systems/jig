@@ -1,0 +1,36 @@
+# Maintainer: DJET Systems <https://github.com/ansgrb/jig>
+# Contributor: DJET Systems <https://github.com/ansgrb/jig>
+# Wraps the sealed release tarball, not a moving git snapshot.
+# After the release workflow publishes SHA256SUMS, paste the hash below.
+# Publish flow for AUR: docs/reference/packaging.md
+pkgname=jig
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="The native C/C++ toolchain: pin the compiler, pick the standard, build in an environment that belongs to the project"
+arch=('x86_64' 'aarch64')
+url="https://github.com/ansgrb/jig"
+license=('AGPL3')
+depends=('glibc')
+makedepends=('cmake' 'ninja')
+source=("$url/releases/download/v$pkgver/jig-$pkgver.tar.gz")
+sha256sums=('PASTE_FROM_SHA256SUMS_AT_RELEASE')
+
+build() {
+  cd "jig-$pkgver"
+  JIG_RELEASE_VERSION="$pkgver" cmake -S . -B build -G Ninja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DJIG_STATIC=ON
+  cmake --build build
+}
+
+check() {
+  cd "jig-$pkgver"
+  ctest --test-dir build --output-on-failure
+}
+
+package() {
+  cd "jig-$pkgver"
+  cmake --install build --prefix "$pkgdir/usr"
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
