@@ -72,6 +72,10 @@ public:
     [[nodiscard]] std::string green(const std::string& s) const;
     [[nodiscard]] std::string yellow(const std::string& s) const;
     [[nodiscard]] std::string red(const std::string& s) const;
+    // The word mark for the front of the tool (bare jig, --help, version).
+    // Colour follows the usual rules, but judged against stdout, because that is where it goes.
+    [[nodiscard]] std::string front() const;
+    [[nodiscard]] std::string signal(const std::string& s) const;
     [[nodiscard]] const char* ok_glyph() const { return unicode_ ? "\xE2\x9C\x93" : "ok"; }
 
 private:

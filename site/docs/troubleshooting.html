@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Troubleshooting · jig docs</title>
+<meta name="description" content="Troubleshooting · jig, the native C/C++ toolchain.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  --bg: #0b0b0c; --fg: #f2f2f0; --muted: #9a9a96; --rule: #2a2a2c; --panel: #111113;
+  --signal: #FF5A1F; --f: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root { --bg: #f5f5f6; --fg: #0b0b0c; --muted: #5d5d62; --rule: #d4d4d8; --panel: #ebebed; --signal: #B93204; color-scheme: light; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 400 1rem/1.65 var(--f); }
+a { color: inherit; }
+code, pre { font-family: var(--f-mono); }
+:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+.top { border-bottom: 1px solid var(--rule); }
+.top .wrap { max-width: 1120px; margin-inline: auto; display: flex; align-items: baseline; gap: 1.5rem; padding: 1rem 1.25rem; }
+.brand { font-weight: 700; font-size: 1.25rem; letter-spacing: -0.03em; text-decoration: none; }
+.top .labs { font-family: var(--f-mono); font-size: 0.8125rem; color: var(--muted); display: flex; gap: 1.25rem; margin-left: auto; }
+.top a { text-decoration: none; }
+.split { max-width: 1120px; margin-inline: auto; display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 2.5rem; padding: 2rem 1.25rem; }
+aside { font-family: var(--f-mono); font-size: 0.8125rem; position: sticky; align-self: start; top: 1rem; }
+aside .part { color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.7rem; margin: 1.5rem 0 0.5rem; }
+aside .part:first-child { margin-top: 0; }
+aside ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.3rem; }
+aside a { text-decoration: none; color: var(--muted); display: grid; grid-template-columns: 1.6rem minmax(0, 1fr); }
+aside a:hover { color: var(--fg); }
+aside a.on { color: var(--fg); }
+aside .n { color: var(--muted); }
+.page { max-width: 46rem; }
+.page > .label { font-family: var(--f-mono); font-size: 0.8125rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.page h1 { font-size: clamp(1.9rem, 4vw, 2.6rem); line-height: 1.1; letter-spacing: -0.02em; margin: 0.5rem 0 2rem; }
+.page h2 { font-size: 1.5rem; line-height: 1.2; letter-spacing: -0.01em; margin: 2.5rem 0 0.75rem; }
+.page h3 { font-size: 1.125rem; margin: 2rem 0 0.5rem; }
+.page p { margin: 0 0 1rem; }
+.page ul, .page ol { margin: 0 0 1rem; padding-left: 1.4rem; }
+.page li { margin-block: 0.3rem; }
+.page blockquote { margin: 0 0 1rem; padding: 0.75rem 1rem; border-left: 2px solid var(--signal); color: var(--muted); }
+.page pre { margin: 0 0 1rem; padding: 1rem 1.1rem; border: 1px solid var(--rule); background: var(--panel); overflow-x: auto; font-size: 0.8125rem; line-height: 1.65; }
+.page code { font-size: 0.9em; }
+.page p code, .page li code, .page h2 code, .page h3 code { border: 1px solid var(--rule); padding: 0.05em 0.35em; }
+.page table { width: 100%; border-collapse: collapse; margin: 0 0 1rem; font-size: 0.875rem; }
+.page th, .page td { text-align: left; padding: 0.55rem 0.75rem 0.55rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.page th { font-family: var(--f-mono); font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+.page hr { border: 0; border-top: 1px solid var(--rule); margin: 2rem 0; }
+.scroll { overflow-x: auto; }
+.pager { display: flex; justify-content: space-between; gap: 1rem; margin-top: 3rem; border-top: 1px solid var(--rule); padding-top: 1.25rem; font-family: var(--f-mono); font-size: 0.8125rem; }
+.pager a { text-decoration: none; color: var(--muted); }
+.pager a:hover { color: var(--fg); }
+.pager b { display: block; color: var(--fg); font-weight: 500; margin-top: 0.2rem; }
+.pager .next { text-align: right; }
+@media (max-width: 900px) {
+  .split { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+  aside { position: static; }
+  aside ol { display: none; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html">jig</a>
+    <nav class="labs" aria-label="Site">
+      <a href="https://github.com/ansgrb/jig">GitHub ↗</a>
+    </nav>
+  </div>
+</header>
+<div class="split">
+  <aside aria-label="Chapters">
+    <p class="part">Book</p>
+    <ol><li><a href='index.html'><span class='n'>01</span><span>jig documentation</span></a></li><li><a href='getting-started.html'><span class='n'>02</span><span>Getting started</span></a></li><li><a href='concepts.html'><span class='n'>03</span><span>Concepts</span></a></li><li><a href='projects.html'><span class='n'>04</span><span>Projects and the manifest</span></a></li><li><a href='toolchains.html'><span class='n'>05</span><span>Toolchains</span></a></li><li><a href='environments.html'><span class='n'>06</span><span>Environments</span></a></li><li><a href='building.html'><span class='n'>07</span><span>Building</span></a></li><li><a href='hermeticity.html'><span class='n'>08</span><span>Hermeticity</span></a></li><li><a href='comparison.html'><span class='n'>09</span><span>Comparison</span></a></li><li><a class='on' href='troubleshooting.html'><span class='n'>10</span><span>Troubleshooting</span></a></li><li><a href='faq.html'><span class='n'>11</span><span>FAQ</span></a></li></ol>
+    <p class="part">Reference</p>
+    <ol><li><a href='cli.html'><span class='n'>01</span><span>CLI reference</span></a></li><li><a href='manifest.html'><span class='n'>02</span><span>Manifest reference and sample sheets</span></a></li><li><a href='env-vars.html'><span class='n'>03</span><span>Environment variables</span></a></li><li><a href='errors.html'><span class='n'>04</span><span>Error codes</span></a></li><li><a href='platforms.html'><span class='n'>05</span><span>Platform sheet</span></a></li><li><a href='cheatsheet.html'><span class='n'>06</span><span>jig cheat sheet</span></a></li><li><a href='packaging.html'><span class='n'>07</span><span>Packaging and distribution</span></a></li></ol>
+  </aside>
+  <main class="page"><p class='label'>10 · Book</p><h1 id='troubleshooting'>Troubleshooting</h1>
+<p>Start with:</p>
+<pre>$ jig doctor
+$ jig &lt;failing command&gt; -vv
+$ jig &lt;failing command&gt; --explain</pre>
+<h2 id='find-your-symptom'>Find your symptom</h2>
+<div class='scroll'><table class='tbl'><thead><tr><th>Symptom</th><th>Likely cause</th><th>Fix</th></tr></thead><tbody><tr><td><code>DJ1001 No jig.toml found</code></td><td>You are outside a project.</td><td><code>cd</code> into it, or <code>jig init</code>.</td></tr><tr><td><code>DJ1003 Unknown key</code></td><td>Typo in <code>jig.toml</code>.</td><td>Use the suggested key.</td></tr><tr><td><code>DJ1103 jig.lock is stale</code></td><td>Manifest changed under <code>--locked</code>.</td><td><code>jig lock</code>, commit the lock.</td></tr><tr><td><code>DJ2101 No toolchain satisfies …</code></td><td>Version not in the index for this host.</td><td><code>jig toolchain available</code>.</td></tr><tr><td><code>DJ2102 … accepts up to c++20</code></td><td>Compiler too old for the standard.</td><td>Newer compiler or lower <code>std</code>.</td></tr><tr><td><code>DJ3201 Visual Studio Build Tools not found</code></td><td>Windows needs the runtime and SDK.</td><td>Install "Desktop development with C++".</td></tr><tr><td><code>DJ3202 macOS SDK not found</code></td><td>No command line tools.</td><td><code>xcode-select --install</code>.</td></tr><tr><td><code>DJ3203 host requirement not met</code></td><td>Older glibc than the toolchain needs.</td><td>Use an older toolchain or newer host.</td></tr><tr><td><code>DJ5001 offline</code></td><td>Needed item not cached.</td><td>Run once online or use a mirror.</td></tr><tr><td><code>DJ5101 / DJ5102</code></td><td>Signature or hash failed.</td><td>Do not bypass. Retry; if it persists, report it.</td></tr><tr><td><code>DJ4002 build failed</code></td><td>Compile error.</td><td>Fix the first failing command shown.</td></tr><tr><td><code>command not found: gcc</code> inside <code>jig shell</code></td><td>The environment hides tools it does not pin.</td><td>Use <code>c++</code>/<code>clang++</code>, or <code>vendor = "system"</code>.</td></tr><tr><td>Editor shows wrong includes</td><td>Not using <code>compile_commands.json</code>.</td><td>Run <code>jig build</code> once; reload the editor.</td></tr><tr><td>CI fails with a stale lock</td><td>Someone changed the manifest without relocking.</td><td><code>jig lock</code> locally and commit.</td></tr><tr><td>Build differs between two machines</td><td>Different host libraries (H1).</td><td>Compare <code>jig doctor --report</code> from both.</td></tr><tr><td>A leaked variable changes the build</td><td><code>inherit = "all"</code> or a variable not in the drop list.</td><td><code>inherit = "none"</code>; see [Environments](environments.md).</td></tr></tbody></table></div>
+<h2 id='an-install-was-interrupted'>An install was interrupted</h2>
+<pre>$ jig doctor --fix</pre>
+<p>removes incomplete store directories after listing them. Installs are atomic, so an interrupted one never becomes usable.</p>
+<h2 id='reset'>Reset</h2>
+<div class='scroll'><table class='tbl'><thead><tr><th>Goal</th><th>Command</th></tr></thead><tbody><tr><td>Rebuild the environment</td><td><code>jig sync --reinstall</code></td></tr><tr><td>Remove build output</td><td><code>jig clean</code></td></tr><tr><td>Remove build output and environment</td><td><code>jig clean --env</code></td></tr><tr><td>Free store space (dry run first)</td><td><code>jig cache prune</code>, then <code>--apply</code></td></tr></tbody></table></div>
+<h2 id='report-a-problem'>Report a problem</h2>
+<pre>$ jig doctor --report</pre>
+<p>writes <code>jig-report-&amp;lt;time&amp;gt;.txt</code> (versions, doctor output, manifest with <code>[env] set</code> values redacted, lock, recent log, names of leaked variables). Read it, then attach it to an issue. jig never uploads it.</p><footer class='pager'><a href='comparison.html'><span>Previous</span><b>Comparison</b></a><a class='next' href='faq.html'><span>Next</span><b>FAQ</b></a></footer></main>
+</div>
+</body>
+</html>

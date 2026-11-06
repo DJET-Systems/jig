@@ -1,3 +1,15 @@
+---
+title: jig
+description: The native C/C++ toolchain. Pin the compiler. Pick the standard. Build in an environment that belongs to the project.
+status: pre-release, first code drop
+latest: 0.1.0-dev
+language: C++23
+license: GPL-3.0-only
+platforms: Linux, macOS, Windows
+maintained_by: DJET Systems
+site: https://djet.online/jig
+---
+
 <p align="center"><img src="site/assets/djet-lockup-white.svg" alt="DJET Systems" width="220"></p>
 
 # jig

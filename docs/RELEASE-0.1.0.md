@@ -49,6 +49,25 @@ Manual downloads and signatures: TODO link.
 
 Release signing key (ed25519, public): TODO. `SHA256SUMS.sig` verifies `SHA256SUMS`. The SBOM is `jig-0.1.0.cdx.json`.
 
+## Heavy bundle
+
+The heavy bundle is the same shell release with every indexed compiler version, CMake and
+Ninja included for the platform, so `jig doctor` reports H1 on a machine with no network.
+Ship it as a separate artifact next to the thin ones; the thin ones stay the default
+(`docs/reference/platforms.md` names what still comes from the machine).
+
+| Artifact | sha256 |
+|---|---|
+| `jig-0.1.0-x86_64-unknown-linux-gnu-heavy.tar.xz` | TODO |
+| `jig-0.1.0-aarch64-unknown-linux-gnu-heavy.tar.xz` | TODO |
+| `jig-0.1.0-x86_64-apple-darwin-heavy.tar.xz` | TODO |
+| `jig-0.1.0-aarch64-apple-darwin-heavy.tar.xz` | TODO |
+
+Heavy is validated by `jig doctor --offline` against the unpacked bundle: every archive
+the index expects resolves from the bundle and every hash matches. Size is multiple GiB
+per platform; do not attach it to `install.sh`. Packaging channels see
+[packaging.md](reference/packaging.md).
+
 ## What is not in 0.1
 
 | Item | When |
@@ -56,7 +75,8 @@ Release signing key (ed25519, public): TODO. `SHA256SUMS.sig` verifies `SHA256SU
 | Dependencies (`jig add`, vcpkg, git, path) | 0.2 |
 | jig building itself with jig | 0.2 |
 | Zig `cc`, pinned C++ runtime (H2), hermetic builds (H3), cross-compilation | 0.3 |
-| GCC provider, `jig check` (clang-tidy), package-manager distribution | 0.4 |
+| GCC provider, `jig check` (clang-tidy) | 0.4 |
+| Distros adopting jig into official repositories (Debian, Fedora, winget) | 0.4; the native channels (AUR, PPA, COPR, Snap) land earlier — [packaging.md](reference/packaging.md) |
 
 jig 0.1 reaches hermeticity H1 (pinned compiler). The C library, system headers and the platform SDK still come from your machine. macOS needs the Xcode command line tools and Windows needs Visual Studio Build Tools.
 

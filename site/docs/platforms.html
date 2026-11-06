@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Platform sheet · jig docs</title>
+<meta name="description" content="Platform sheet · jig, the native C/C++ toolchain.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  --bg: #0b0b0c; --fg: #f2f2f0; --muted: #9a9a96; --rule: #2a2a2c; --panel: #111113;
+  --signal: #FF5A1F; --f: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root { --bg: #f5f5f6; --fg: #0b0b0c; --muted: #5d5d62; --rule: #d4d4d8; --panel: #ebebed; --signal: #B93204; color-scheme: light; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 400 1rem/1.65 var(--f); }
+a { color: inherit; }
+code, pre { font-family: var(--f-mono); }
+:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+.top { border-bottom: 1px solid var(--rule); }
+.top .wrap { max-width: 1120px; margin-inline: auto; display: flex; align-items: baseline; gap: 1.5rem; padding: 1rem 1.25rem; }
+.brand { font-weight: 700; font-size: 1.25rem; letter-spacing: -0.03em; text-decoration: none; }
+.top .labs { font-family: var(--f-mono); font-size: 0.8125rem; color: var(--muted); display: flex; gap: 1.25rem; margin-left: auto; }
+.top a { text-decoration: none; }
+.split { max-width: 1120px; margin-inline: auto; display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 2.5rem; padding: 2rem 1.25rem; }
+aside { font-family: var(--f-mono); font-size: 0.8125rem; position: sticky; align-self: start; top: 1rem; }
+aside .part { color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.7rem; margin: 1.5rem 0 0.5rem; }
+aside .part:first-child { margin-top: 0; }
+aside ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.3rem; }
+aside a { text-decoration: none; color: var(--muted); display: grid; grid-template-columns: 1.6rem minmax(0, 1fr); }
+aside a:hover { color: var(--fg); }
+aside a.on { color: var(--fg); }
+aside .n { color: var(--muted); }
+.page { max-width: 46rem; }
+.page > .label { font-family: var(--f-mono); font-size: 0.8125rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.page h1 { font-size: clamp(1.9rem, 4vw, 2.6rem); line-height: 1.1; letter-spacing: -0.02em; margin: 0.5rem 0 2rem; }
+.page h2 { font-size: 1.5rem; line-height: 1.2; letter-spacing: -0.01em; margin: 2.5rem 0 0.75rem; }
+.page h3 { font-size: 1.125rem; margin: 2rem 0 0.5rem; }
+.page p { margin: 0 0 1rem; }
+.page ul, .page ol { margin: 0 0 1rem; padding-left: 1.4rem; }
+.page li { margin-block: 0.3rem; }
+.page blockquote { margin: 0 0 1rem; padding: 0.75rem 1rem; border-left: 2px solid var(--signal); color: var(--muted); }
+.page pre { margin: 0 0 1rem; padding: 1rem 1.1rem; border: 1px solid var(--rule); background: var(--panel); overflow-x: auto; font-size: 0.8125rem; line-height: 1.65; }
+.page code { font-size: 0.9em; }
+.page p code, .page li code, .page h2 code, .page h3 code { border: 1px solid var(--rule); padding: 0.05em 0.35em; }
+.page table { width: 100%; border-collapse: collapse; margin: 0 0 1rem; font-size: 0.875rem; }
+.page th, .page td { text-align: left; padding: 0.55rem 0.75rem 0.55rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.page th { font-family: var(--f-mono); font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+.page hr { border: 0; border-top: 1px solid var(--rule); margin: 2rem 0; }
+.scroll { overflow-x: auto; }
+.pager { display: flex; justify-content: space-between; gap: 1rem; margin-top: 3rem; border-top: 1px solid var(--rule); padding-top: 1.25rem; font-family: var(--f-mono); font-size: 0.8125rem; }
+.pager a { text-decoration: none; color: var(--muted); }
+.pager a:hover { color: var(--fg); }
+.pager b { display: block; color: var(--fg); font-weight: 500; margin-top: 0.2rem; }
+.pager .next { text-align: right; }
+@media (max-width: 900px) {
+  .split { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+  aside { position: static; }
+  aside ol { display: none; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html">jig</a>
+    <nav class="labs" aria-label="Site">
+      <a href="https://github.com/ansgrb/jig">GitHub ↗</a>
+    </nav>
+  </div>
+</header>
+<div class="split">
+  <aside aria-label="Chapters">
+    <p class="part">Book</p>
+    <ol><li><a href='index.html'><span class='n'>01</span><span>jig documentation</span></a></li><li><a href='getting-started.html'><span class='n'>02</span><span>Getting started</span></a></li><li><a href='concepts.html'><span class='n'>03</span><span>Concepts</span></a></li><li><a href='projects.html'><span class='n'>04</span><span>Projects and the manifest</span></a></li><li><a href='toolchains.html'><span class='n'>05</span><span>Toolchains</span></a></li><li><a href='environments.html'><span class='n'>06</span><span>Environments</span></a></li><li><a href='building.html'><span class='n'>07</span><span>Building</span></a></li><li><a href='hermeticity.html'><span class='n'>08</span><span>Hermeticity</span></a></li><li><a href='comparison.html'><span class='n'>09</span><span>Comparison</span></a></li><li><a href='troubleshooting.html'><span class='n'>10</span><span>Troubleshooting</span></a></li><li><a href='faq.html'><span class='n'>11</span><span>FAQ</span></a></li></ol>
+    <p class="part">Reference</p>
+    <ol><li><a href='cli.html'><span class='n'>01</span><span>CLI reference</span></a></li><li><a href='manifest.html'><span class='n'>02</span><span>Manifest reference and sample sheets</span></a></li><li><a href='env-vars.html'><span class='n'>03</span><span>Environment variables</span></a></li><li><a href='errors.html'><span class='n'>04</span><span>Error codes</span></a></li><li><a class='on' href='platforms.html'><span class='n'>05</span><span>Platform sheet</span></a></li><li><a href='cheatsheet.html'><span class='n'>06</span><span>jig cheat sheet</span></a></li><li><a href='packaging.html'><span class='n'>07</span><span>Packaging and distribution</span></a></li></ol>
+  </aside>
+  <main class="page"><p class='label'>05 · Reference</p><h1 id='platform-sheet'>Platform sheet</h1>
+<h2 id='support-tiers'>Support tiers</h2>
+<div class='scroll'><table class='tbl'><thead><tr><th>Tier</th><th>Meaning</th></tr></thead><tbody><tr><td>1</td><td>Built, tested and released on every change. Blocking in CI.</td></tr><tr><td>2</td><td>Built and released. Tested on a schedule. Not blocking.</td></tr><tr><td>3</td><td>Community effort. No promises.</td></tr></tbody></table></div>
+<div class='scroll'><table class='tbl'><thead><tr><th>Host</th><th>Triple</th><th>Tier (v0.1)</th></tr></thead><tbody><tr><td>Linux x86_64</td><td><code>x86_64-unknown-linux-gnu</code></td><td>1</td></tr><tr><td>macOS arm64</td><td><code>aarch64-apple-darwin</code></td><td>1</td></tr><tr><td>Windows x86_64</td><td><code>x86_64-pc-windows-msvc</code></td><td>1</td></tr><tr><td>Linux aarch64</td><td><code>aarch64-unknown-linux-gnu</code></td><td>2</td></tr><tr><td>macOS x86_64</td><td><code>x86_64-apple-darwin</code></td><td>2</td></tr><tr><td>Windows arm64</td><td><code>aarch64-pc-windows-msvc</code></td><td>3</td></tr><tr><td>FreeBSD, others</td><td></td><td>3</td></tr></tbody></table></div>
+<p>The tier list is a plan. The index builder decides which toolchains exist per host; <code>jig toolchain available</code> always reports the truth for the machine it runs on.</p>
+<h2 id='what-each-platform-needs-from-the-machine-v01-hermeticity-h1'>What each platform needs from the machine (v0.1, hermeticity H1)</h2>
+<div class='scroll'><table class='tbl'><thead><tr><th>Platform</th><th>Pinned by jig</th><th>Still from the machine</th><th>Prerequisite message</th></tr></thead><tbody><tr><td>Linux</td><td>compiler, CMake, Ninja</td><td>libc (glibc or musl as the toolchain entry requires), system headers, C++ runtime unless the entry says otherwise</td><td><code>DJ3203</code> names the required glibc version</td></tr><tr><td>macOS</td><td>compiler, CMake, Ninja</td><td>macOS SDK and system libraries</td><td><code>DJ3202</code>: <code>xcode-select --install</code></td></tr><tr><td>Windows</td><td>compiler (clang), CMake, Ninja</td><td>MSVC runtime, Windows SDK from Visual Studio Build Tools</td><td><code>DJ3201</code>: install "Desktop development with C++"</td></tr></tbody></table></div>
+<p>jig does not bundle the macOS SDK or the Windows SDK in v0.1 (decision D-009).</p>
+<h2 id='shim-kind-per-platform'>Shim kind per platform</h2>
+<div class='scroll'><table class='tbl'><thead><tr><th>Platform</th><th>Default shim</th><th>Status</th></tr></thead><tbody><tr><td>Linux</td><td><code>link</code></td><td>To be confirmed by T-005-03</td></tr><tr><td>macOS</td><td><code>link</code></td><td>To be confirmed by T-005-03</td></tr><tr><td>Windows</td><td><code>launcher</code></td><td>Symlinks need privileges; launcher is the default</td></tr></tbody></table></div>
+<p>The "to be confirmed" cells are filled in with the result of the real-toolchain test and committed here.</p>
+<h2 id='default-directories'>Default directories</h2>
+<div class='scroll'><table class='tbl'><thead><tr><th>Purpose</th><th>Linux</th><th>macOS</th><th>Windows</th></tr></thead><tbody><tr><td><code>JIG_HOME</code></td><td><code>$XDG_DATA_HOME/jig</code> or <code>~/.local/share/jig</code></td><td><code>~/Library/Application Support/jig</code></td><td><code>%LOCALAPPDATA%\jig</code></td></tr><tr><td>Config</td><td><code>$XDG_CONFIG_HOME/jig</code> or <code>~/.config/jig</code></td><td><code>~/Library/Application Support/jig</code></td><td><code>%APPDATA%\jig</code></td></tr><tr><td>Installed binary</td><td><code>~/.local/bin/jig</code></td><td><code>~/.local/bin/jig</code></td><td><code>%LOCALAPPDATA%\Programs\jig\jig.exe</code></td></tr></tbody></table></div>
+<h2 id='shell-support'>Shell support</h2>
+<div class='scroll'><table class='tbl'><thead><tr><th>Shell</th><th><code>jig env</code></th><th><code>activate</code></th><th><code>jig shell</code></th></tr></thead><tbody><tr><td>bash, zsh</td><td><code>sh</code></td><td><code>activate</code></td><td>yes</td></tr><tr><td>fish</td><td><code>fish</code></td><td><code>activate.fish</code></td><td>yes</td></tr><tr><td>PowerShell</td><td><code>pwsh</code></td><td><code>activate.ps1</code></td><td>yes</td></tr><tr><td>cmd</td><td><code>cmd</code></td><td><code>activate.bat</code></td><td>yes</td></tr></tbody></table></div>
+<h2 id='release-artifact-static-linking-summary'>Release artifact static-linking summary</h2>
+<div class='scroll'><table class='tbl'><thead><tr><th>Platform</th><th>Link mode</th></tr></thead><tbody><tr><td>Linux</td><td>fully static (musl), glibc fallback build</td></tr><tr><td>macOS</td><td>system <code>libc++</code>, everything else static</td></tr><tr><td>Windows</td><td>static CRT (<code>/MT</code>), everything static</td></tr></tbody></table></div><footer class='pager'><a href='errors.html'><span>Previous</span><b>Error codes</b></a><a class='next' href='cheatsheet.html'><span>Next</span><b>jig cheat sheet</b></a></footer></main>
+</div>
+</body>
+</html>

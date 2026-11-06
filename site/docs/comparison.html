@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comparison · jig docs</title>
+<meta name="description" content="Comparison · jig, the native C/C++ toolchain.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  --bg: #0b0b0c; --fg: #f2f2f0; --muted: #9a9a96; --rule: #2a2a2c; --panel: #111113;
+  --signal: #FF5A1F; --f: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root { --bg: #f5f5f6; --fg: #0b0b0c; --muted: #5d5d62; --rule: #d4d4d8; --panel: #ebebed; --signal: #B93204; color-scheme: light; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 400 1rem/1.65 var(--f); }
+a { color: inherit; }
+code, pre { font-family: var(--f-mono); }
+:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+.top { border-bottom: 1px solid var(--rule); }
+.top .wrap { max-width: 1120px; margin-inline: auto; display: flex; align-items: baseline; gap: 1.5rem; padding: 1rem 1.25rem; }
+.brand { font-weight: 700; font-size: 1.25rem; letter-spacing: -0.03em; text-decoration: none; }
+.top .labs { font-family: var(--f-mono); font-size: 0.8125rem; color: var(--muted); display: flex; gap: 1.25rem; margin-left: auto; }
+.top a { text-decoration: none; }
+.split { max-width: 1120px; margin-inline: auto; display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 2.5rem; padding: 2rem 1.25rem; }
+aside { font-family: var(--f-mono); font-size: 0.8125rem; position: sticky; align-self: start; top: 1rem; }
+aside .part { color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.7rem; margin: 1.5rem 0 0.5rem; }
+aside .part:first-child { margin-top: 0; }
+aside ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.3rem; }
+aside a { text-decoration: none; color: var(--muted); display: grid; grid-template-columns: 1.6rem minmax(0, 1fr); }
+aside a:hover { color: var(--fg); }
+aside a.on { color: var(--fg); }
+aside .n { color: var(--muted); }
+.page { max-width: 46rem; }
+.page > .label { font-family: var(--f-mono); font-size: 0.8125rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.page h1 { font-size: clamp(1.9rem, 4vw, 2.6rem); line-height: 1.1; letter-spacing: -0.02em; margin: 0.5rem 0 2rem; }
+.page h2 { font-size: 1.5rem; line-height: 1.2; letter-spacing: -0.01em; margin: 2.5rem 0 0.75rem; }
+.page h3 { font-size: 1.125rem; margin: 2rem 0 0.5rem; }
+.page p { margin: 0 0 1rem; }
+.page ul, .page ol { margin: 0 0 1rem; padding-left: 1.4rem; }
+.page li { margin-block: 0.3rem; }
+.page blockquote { margin: 0 0 1rem; padding: 0.75rem 1rem; border-left: 2px solid var(--signal); color: var(--muted); }
+.page pre { margin: 0 0 1rem; padding: 1rem 1.1rem; border: 1px solid var(--rule); background: var(--panel); overflow-x: auto; font-size: 0.8125rem; line-height: 1.65; }
+.page code { font-size: 0.9em; }
+.page p code, .page li code, .page h2 code, .page h3 code { border: 1px solid var(--rule); padding: 0.05em 0.35em; }
+.page table { width: 100%; border-collapse: collapse; margin: 0 0 1rem; font-size: 0.875rem; }
+.page th, .page td { text-align: left; padding: 0.55rem 0.75rem 0.55rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.page th { font-family: var(--f-mono); font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+.page hr { border: 0; border-top: 1px solid var(--rule); margin: 2rem 0; }
+.scroll { overflow-x: auto; }
+.pager { display: flex; justify-content: space-between; gap: 1rem; margin-top: 3rem; border-top: 1px solid var(--rule); padding-top: 1.25rem; font-family: var(--f-mono); font-size: 0.8125rem; }
+.pager a { text-decoration: none; color: var(--muted); }
+.pager a:hover { color: var(--fg); }
+.pager b { display: block; color: var(--fg); font-weight: 500; margin-top: 0.2rem; }
+.pager .next { text-align: right; }
+@media (max-width: 900px) {
+  .split { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+  aside { position: static; }
+  aside ol { display: none; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html">jig</a>
+    <nav class="labs" aria-label="Site">
+      <a href="https://github.com/ansgrb/jig">GitHub ↗</a>
+    </nav>
+  </div>
+</header>
+<div class="split">
+  <aside aria-label="Chapters">
+    <p class="part">Book</p>
+    <ol><li><a href='index.html'><span class='n'>01</span><span>jig documentation</span></a></li><li><a href='getting-started.html'><span class='n'>02</span><span>Getting started</span></a></li><li><a href='concepts.html'><span class='n'>03</span><span>Concepts</span></a></li><li><a href='projects.html'><span class='n'>04</span><span>Projects and the manifest</span></a></li><li><a href='toolchains.html'><span class='n'>05</span><span>Toolchains</span></a></li><li><a href='environments.html'><span class='n'>06</span><span>Environments</span></a></li><li><a href='building.html'><span class='n'>07</span><span>Building</span></a></li><li><a href='hermeticity.html'><span class='n'>08</span><span>Hermeticity</span></a></li><li><a class='on' href='comparison.html'><span class='n'>09</span><span>Comparison</span></a></li><li><a href='troubleshooting.html'><span class='n'>10</span><span>Troubleshooting</span></a></li><li><a href='faq.html'><span class='n'>11</span><span>FAQ</span></a></li></ol>
+    <p class="part">Reference</p>
+    <ol><li><a href='cli.html'><span class='n'>01</span><span>CLI reference</span></a></li><li><a href='manifest.html'><span class='n'>02</span><span>Manifest reference and sample sheets</span></a></li><li><a href='env-vars.html'><span class='n'>03</span><span>Environment variables</span></a></li><li><a href='errors.html'><span class='n'>04</span><span>Error codes</span></a></li><li><a href='platforms.html'><span class='n'>05</span><span>Platform sheet</span></a></li><li><a href='cheatsheet.html'><span class='n'>06</span><span>jig cheat sheet</span></a></li><li><a href='packaging.html'><span class='n'>07</span><span>Packaging and distribution</span></a></li></ol>
+  </aside>
+  <main class="page"><p class='label'>09 · Book</p><h1 id='comparison'>Comparison</h1>
+<p>jig sits in a space that already has good tools. This page says what each does as described by its own project at the time of writing, and where jig is different. Check each project's documentation for current details.</p>
+<h2 id='the-layers'>The layers</h2>
+<pre class="lang-mermaid">flowchart TB
+    A["Project and toolchain layer&lt;br/&gt;create, pin compiler, environment, run"] --&gt; B["Build layer&lt;br/&gt;CMake, Meson, build2, xmake, Bazel"]
+    B --&gt; C["Dependency layer&lt;br/&gt;vcpkg, Conan, build2's package manager, xrepo"]
+    A -. "jig" .-&gt; A</pre>
+<p>jig works in the top layer and uses CMake with Ninja for the build layer. From v0.2 it hands dependencies to vcpkg.</p>
+<h2 id='other-tools'>Other tools</h2>
+<div class='scroll'><table class='tbl'><thead><tr><th>Tool</th><th>What its project describes</th><th>Difference with jig</th></tr></thead><tbody><tr><td><strong>build2</strong></td><td>An integrated C/C++ build toolchain: its own build system, package manager and project manager, aiming to approximate Cargo's convenience with a uniform interface across platforms and compilers.</td><td>build2 replaces the build layer with its own. jig keeps CMake and Ninja, so existing projects and IDE support carry over.</td></tr><tr><td><strong>caxe (<code>cx</code>)</strong></td><td>A project manager for C and C++ that scaffolds, builds, tests and formats, detects compilers, and can install portable toolchains.</td><td>jig pins the compiler by hash from a signed index, records it in a lock, and reports a hermeticity level.</td></tr><tr><td><strong>CMake</strong></td><td>A build-system generator.</td><td>jig generates CMake for you and runs it inside the environment.</td></tr><tr><td><strong>Conan, vcpkg</strong></td><td>Package managers for C and C++ libraries.</td><td>Different layer. jig v0.2 uses vcpkg.</td></tr><tr><td><strong>xmake, Meson, Bazel</strong></td><td>Build systems with their own languages and models.</td><td>Different build layer.</td></tr><tr><td><strong>Nix, conda</strong></td><td>General-purpose environments and package systems.</td><td>Much wider scope. jig is only about the native C/C++ workflow and ships one static binary.</td></tr><tr><td><strong><code>uv</code>, <code>cargo</code></strong></td><td>The inspiration: project, lock, environment and toolchain in one tool for Python and Rust.</td><td>jig brings that shape to native C and C++.</td></tr></tbody></table></div>
+<h2 id='a-note-on-names'>A note on names</h2>
+<p>"jig" is a common word and other, unrelated projects use it. This one is a C and C++ toolchain and project manager made by DJET Systems. Its binary, repository and documentation are all named jig, and it lives at https://djet.online/jig.</p>
+<h2 id='when-jig-is-not-the-right-tool'>When jig is not the right tool</h2>
+<ul><li>You already build with Bazel, Meson or build2 and are happy. Keep going.</li><li>You must target a platform no provider supports.</li><li>You need H2 or H3 isolation today. Wait for 0.3.</li><li>You are fine with whatever compiler is on the machine and do not need to share an exact version. Plain CMake is simpler.</li></ul><footer class='pager'><a href='hermeticity.html'><span>Previous</span><b>Hermeticity</b></a><a class='next' href='troubleshooting.html'><span>Next</span><b>Troubleshooting</b></a></footer></main>
+</div>
+</body>
+</html>

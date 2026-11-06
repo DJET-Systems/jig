@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Toolchains · jig docs</title>
+<meta name="description" content="Toolchains · jig, the native C/C++ toolchain.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  --bg: #0b0b0c; --fg: #f2f2f0; --muted: #9a9a96; --rule: #2a2a2c; --panel: #111113;
+  --signal: #FF5A1F; --f: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root { --bg: #f5f5f6; --fg: #0b0b0c; --muted: #5d5d62; --rule: #d4d4d8; --panel: #ebebed; --signal: #B93204; color-scheme: light; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 400 1rem/1.65 var(--f); }
+a { color: inherit; }
+code, pre { font-family: var(--f-mono); }
+:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+.top { border-bottom: 1px solid var(--rule); }
+.top .wrap { max-width: 1120px; margin-inline: auto; display: flex; align-items: baseline; gap: 1.5rem; padding: 1rem 1.25rem; }
+.brand { font-weight: 700; font-size: 1.25rem; letter-spacing: -0.03em; text-decoration: none; }
+.top .labs { font-family: var(--f-mono); font-size: 0.8125rem; color: var(--muted); display: flex; gap: 1.25rem; margin-left: auto; }
+.top a { text-decoration: none; }
+.split { max-width: 1120px; margin-inline: auto; display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 2.5rem; padding: 2rem 1.25rem; }
+aside { font-family: var(--f-mono); font-size: 0.8125rem; position: sticky; align-self: start; top: 1rem; }
+aside .part { color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.7rem; margin: 1.5rem 0 0.5rem; }
+aside .part:first-child { margin-top: 0; }
+aside ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.3rem; }
+aside a { text-decoration: none; color: var(--muted); display: grid; grid-template-columns: 1.6rem minmax(0, 1fr); }
+aside a:hover { color: var(--fg); }
+aside a.on { color: var(--fg); }
+aside .n { color: var(--muted); }
+.page { max-width: 46rem; }
+.page > .label { font-family: var(--f-mono); font-size: 0.8125rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.page h1 { font-size: clamp(1.9rem, 4vw, 2.6rem); line-height: 1.1; letter-spacing: -0.02em; margin: 0.5rem 0 2rem; }
+.page h2 { font-size: 1.5rem; line-height: 1.2; letter-spacing: -0.01em; margin: 2.5rem 0 0.75rem; }
+.page h3 { font-size: 1.125rem; margin: 2rem 0 0.5rem; }
+.page p { margin: 0 0 1rem; }
+.page ul, .page ol { margin: 0 0 1rem; padding-left: 1.4rem; }
+.page li { margin-block: 0.3rem; }
+.page blockquote { margin: 0 0 1rem; padding: 0.75rem 1rem; border-left: 2px solid var(--signal); color: var(--muted); }
+.page pre { margin: 0 0 1rem; padding: 1rem 1.1rem; border: 1px solid var(--rule); background: var(--panel); overflow-x: auto; font-size: 0.8125rem; line-height: 1.65; }
+.page code { font-size: 0.9em; }
+.page p code, .page li code, .page h2 code, .page h3 code { border: 1px solid var(--rule); padding: 0.05em 0.35em; }
+.page table { width: 100%; border-collapse: collapse; margin: 0 0 1rem; font-size: 0.875rem; }
+.page th, .page td { text-align: left; padding: 0.55rem 0.75rem 0.55rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.page th { font-family: var(--f-mono); font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+.page hr { border: 0; border-top: 1px solid var(--rule); margin: 2rem 0; }
+.scroll { overflow-x: auto; }
+.pager { display: flex; justify-content: space-between; gap: 1rem; margin-top: 3rem; border-top: 1px solid var(--rule); padding-top: 1.25rem; font-family: var(--f-mono); font-size: 0.8125rem; }
+.pager a { text-decoration: none; color: var(--muted); }
+.pager a:hover { color: var(--fg); }
+.pager b { display: block; color: var(--fg); font-weight: 500; margin-top: 0.2rem; }
+.pager .next { text-align: right; }
+@media (max-width: 900px) {
+  .split { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+  aside { position: static; }
+  aside ol { display: none; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html">jig</a>
+    <nav class="labs" aria-label="Site">
+      <a href="https://github.com/ansgrb/jig">GitHub ↗</a>
+    </nav>
+  </div>
+</header>
+<div class="split">
+  <aside aria-label="Chapters">
+    <p class="part">Book</p>
+    <ol><li><a href='index.html'><span class='n'>01</span><span>jig documentation</span></a></li><li><a href='getting-started.html'><span class='n'>02</span><span>Getting started</span></a></li><li><a href='concepts.html'><span class='n'>03</span><span>Concepts</span></a></li><li><a href='projects.html'><span class='n'>04</span><span>Projects and the manifest</span></a></li><li><a class='on' href='toolchains.html'><span class='n'>05</span><span>Toolchains</span></a></li><li><a href='environments.html'><span class='n'>06</span><span>Environments</span></a></li><li><a href='building.html'><span class='n'>07</span><span>Building</span></a></li><li><a href='hermeticity.html'><span class='n'>08</span><span>Hermeticity</span></a></li><li><a href='comparison.html'><span class='n'>09</span><span>Comparison</span></a></li><li><a href='troubleshooting.html'><span class='n'>10</span><span>Troubleshooting</span></a></li><li><a href='faq.html'><span class='n'>11</span><span>FAQ</span></a></li></ol>
+    <p class="part">Reference</p>
+    <ol><li><a href='cli.html'><span class='n'>01</span><span>CLI reference</span></a></li><li><a href='manifest.html'><span class='n'>02</span><span>Manifest reference and sample sheets</span></a></li><li><a href='env-vars.html'><span class='n'>03</span><span>Environment variables</span></a></li><li><a href='errors.html'><span class='n'>04</span><span>Error codes</span></a></li><li><a href='platforms.html'><span class='n'>05</span><span>Platform sheet</span></a></li><li><a href='cheatsheet.html'><span class='n'>06</span><span>jig cheat sheet</span></a></li><li><a href='packaging.html'><span class='n'>07</span><span>Packaging and distribution</span></a></li></ol>
+  </aside>
+  <main class="page"><p class='label'>05 · Book</p><h1 id='toolchains'>Toolchains</h1>
+<h2 id='choosing-before-you-create'>Choosing before you create</h2>
+<p>Choosing a standard narrows the compilers. jig shows only versions that accepted your standard when the index was built, because the index builder runs each compiler with <code>-std=&amp;lt;value&amp;gt; -fsyntax-only</code> and records the result.</p>
+<pre>$ jig toolchain available --lang c++ --std c++23
+vendor  version  hermeticity  accepts
+llvm    20.1.8   h1           c++14 c++17 c++20 c++23 c++26
+llvm    19.1.7   h1           c++14 c++17 c++20 c++23 c++26
+llvm    18.1.8   h1           c++14 c++17 c++20 c++23 c++26</pre>
+<p>(Illustrative output.)</p>
+<p>"Accepts" means the compiler recognises the standard flag. It does not promise every library feature of that standard. <code>jig doctor --features</code> prints the feature-test macros measured for your compiler.</p>
+<h2 id='version-specifications'>Version specifications</h2>
+<div class='scroll'><table class='tbl'><thead><tr><th>You write</th><th>Means</th></tr></thead><tbody><tr><td><code>clang@20</code></td><td>Any 20.x.y, resolved to the highest</td></tr><tr><td><code>clang@20.1</code></td><td>Any 20.1.y</td></tr><tr><td><code>clang@20.1.8</code></td><td>Exactly this</td></tr><tr><td><code>clang@^19</code></td><td><code>&amp;gt;=19.0.0, &amp;lt;20.0.0</code></td></tr><tr><td><code>clang@~20.1</code></td><td><code>&amp;gt;=20.1.0, &amp;lt;20.2.0</code></td></tr><tr><td><code>clang@&amp;gt;=18,&amp;lt;21</code></td><td>A range</td></tr><tr><td><code>clang@latest</code></td><td>The highest stable version</td></tr></tbody></table></div>
+<p>Prereleases are never chosen unless you name one or pass <code>--prerelease</code>.</p>
+<h2 id='vendors'>Vendors</h2>
+<div class='scroll'><table class='tbl'><thead><tr><th>Vendor</th><th>Hermeticity</th><th>What it does</th></tr></thead><tbody><tr><td><code>llvm</code></td><td>H1</td><td>Downloads the official LLVM release for your host through the signed index. Provides <code>clang</code>, <code>clang++</code>, <code>clang-format</code>, <code>clang-tidy</code>, <code>clangd</code>, <code>lld</code>, <code>llvm-ar</code>.</td></tr><tr><td><code>system</code></td><td>H0</td><td>Uses a compiler that is already on your machine (GCC, Clang, Apple Clang, MSVC). Nothing is downloaded or pinned.</td></tr><tr><td><code>zig</code></td><td>H3</td><td><em>(v0.3)</em></td></tr><tr><td><code>gcc</code></td><td></td><td><em>(v0.4, after a provenance review)</em></td></tr></tbody></table></div>
+<p>CMake and Ninja are pinned the same way, under <code>[toolchain.tools]</code>.</p>
+<h2 id='commands'>Commands</h2>
+<pre>$ jig toolchain list                   installed in the store
+$ jig toolchain available              installable (needs the index)
+$ jig toolchain install clang@20
+$ jig toolchain use clang@19           change this project's compiler
+$ jig toolchain pin                    write the exact version into jig.toml
+$ jig toolchain which c++              real path of a pinned tool
+$ jig toolchain remove clang@18        refuses if a lock needs it
+$ jig toolchain update                 refresh the index</pre>
+<h2 id='offline-use'>Offline use</h2>
+<p>Everything in the store works offline. Use <code>--offline</code> to make that a rule, and <code>--frozen</code> in CI to also require an up-to-date lock.</p>
+<p>To work on a machine with no internet, copy the index folder and the archives to a directory, set <code>JIG_MIRROR</code> to it, and run jig as usual. The signature is still verified.</p>
+<h2 id='when-a-version-is-missing'>When a version is missing</h2>
+<p><code>DJ2101</code> means the version you asked for is not in the index for your host. <code>DJ2102</code> means it is, but it does not accept your standard. Both list the nearest alternatives.</p><footer class='pager'><a href='projects.html'><span>Previous</span><b>Projects and the manifest</b></a><a class='next' href='environments.html'><span>Next</span><b>Environments</b></a></footer></main>
+</div>
+</body>
+</html>

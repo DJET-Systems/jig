@@ -317,8 +317,9 @@ int cache(const Settings&, Ui& ui, const std::string& action) {
     return report(ui, Error{"DJ6003", "Unknown cache action \"" + action + "\"", {}, "Use: dir, size, clean", exit_code::usage});
 }
 
-int version(const Settings&, Ui& ui) {
+int version(const Settings& s, Ui& ui) {
     auto h = host_info();
+    if (!s.json) ui.print(ui.front() + "\n");
     ui.print(std::string("jig ") + JIG_VERSION + "\n  built with   " + JIG_BUILD_COMPILER + "\n  host         " + h.triple +
              "\n  providers    system (H0)   [llvm: not in this build]\n  site         https://djet.online/jig\n");
     return 0;

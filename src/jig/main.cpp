@@ -253,14 +253,27 @@ int main(int argc, char** argv) {
     try {
         app.parse(argc, argv);
     } catch (const CLI::CallForHelp& e) {
-        std::cout << app.help();
+        Settings s = make_settings(c);
+        std::cout << Ui(s).front() << "\n" << app.help();
         return 0;
     } catch (const CLI::CallForAllHelp& e) {
-        std::cout << app.help("", CLI::AppFormatMode::All);
+        Settings s = make_settings(c);
+        std::cout << Ui(s).front() << "\n" << app.help("", CLI::AppFormatMode::All);
         return 0;
     } catch (const CLI::CallForVersion& e) {
         std::cout << "jig " << JIG_VERSION << "\n";
         return 0;
+    } catch (const CLI::RequiredError& e) {
+        // The bare tool is the front door: word mark first, then the way in.
+        if (std::string(e.what()) == "A subcommand is required") {
+            Settings s = make_settings(c);
+            std::cout << Ui(s).front() << "\n"
+                      << "  Pin the compiler. Pick the standard. Build in an environment that belongs to the project.\n\n"
+                      << "  Run `jig --help` for every command.\n";
+            return 2;
+        }
+        int code = app.exit(e);
+        return code == 0 ? 2 : 2;
     } catch (const CLI::ParseError& e) {
         // CLI11 prints sub-command help itself for `jig build --help`; everything else is a usage error.
         int code = app.exit(e);

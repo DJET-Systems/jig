@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>jig · the native C/C++ toolchain · DJET Systems</title>
+<title>jig · the native C/C++ toolchain</title>
 <meta name="description" content="jig pins the compiler, lets you choose the language standard, and builds C and C++ projects inside an environment that belongs to the project. One static binary by DJET Systems.">
 <link rel="canonical" href="https://djet.online/jig">
 <meta property="og:type" content="website">
@@ -15,17 +15,17 @@
 <meta name="theme-color" content="#0b0b0c">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"SoftwareApplication","name":"jig","alternateName":"jig, the native C/C++ toolchain","applicationCategory":"DeveloperApplication","operatingSystem":"Linux, macOS, Windows","url":"https://djet.online/jig","publisher":{"@type":"Organization","name":"DJET Systems","url":"https://djet.online"}}
 </script>
 <style>
 /* ------------------------------------------------------------------
-   jig product page · DJET Systems
-   Layout concept: the DJET mark is one stem crossed by three bars.
-   The page reads the same way: one column of text crossed by three
-   thick bars (Pin, Isolate, Build). Monochrome, no accent colour.
-   Restyle by editing the tokens below; markup does not change.
+   jig product page · an open source contribution from DJET Systems
+   The identity (DJET_visual_identity/02) draws the mark from IBM Plex
+   Sans Bold on ink and bone, with one signal element per layout.
+   This page reads the same way: the word mark is the main event, and
+   the signal lands once, under the hero. Three thick bars follow.
    ------------------------------------------------------------------ */
 :root {
   /* colour tokens (dark first, matches djet.online) */
@@ -34,6 +34,8 @@
   --muted: #9a9a96;
   --rule: #2a2a2c;
   --panel: #111113;
+  --signal: #FF5A1F;     /* one accent per layout · identity 02/03 */
+  --light-signal: #B93204; /* Signal Deep, for light grounds */
   --bar-bg: #f2f2f0;     /* inverted bars */
   --bar-fg: #0b0b0c;
   --ok: #7fd49a;
@@ -42,10 +44,10 @@
   --focus: #f2f2f0;
   color-scheme: dark;
 
-  /* type tokens */
-  --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
-  --f-body: "Archivo", "Helvetica Neue", Arial, sans-serif;
-  --f-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  /* type tokens (Plex throughout · identity 02/04) */
+  --f-display: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
   --step--1: 0.8125rem;
   --step-0: 1rem;
   --step-1: 1.25rem;
@@ -61,6 +63,7 @@
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
     --bg: #f5f5f6; --fg: #0b0b0c; --muted: #5d5d62; --rule: #d4d4d8; --panel: #ebebed;
+    --signal: #B93204; --light-signal: #FF5A1F;
     --bar-bg: #0b0b0c; --bar-fg: #f5f5f6;
     --ok: #17703a; --warn: #8a5a00; --err: #b3261e; --focus: #0b0b0c;
     color-scheme: light;
@@ -68,6 +71,7 @@
 }
 :root[data-theme="light"] {
   --bg: #f5f5f6; --fg: #0b0b0c; --muted: #5d5d62; --rule: #d4d4d8; --panel: #ebebed;
+  --signal: #B93204; --light-signal: #FF5A1F;
   --bar-bg: #0b0b0c; --bar-fg: #f5f5f6;
   --ok: #17703a; --warn: #8a5a00; --err: #b3261e; --focus: #0b0b0c;
   color-scheme: light;
@@ -111,8 +115,7 @@ code, pre, kbd { font-family: var(--f-mono); }
 h1, h2, h3 { font-family: var(--f-display); margin: 0; text-wrap: balance; }
 h2 {
   font-size: var(--step-3);
-  font-stretch: 112%;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.04;
   letter-spacing: -0.015em;
 }
@@ -129,9 +132,8 @@ section { padding-block: var(--section) 0; }
 .strip .wrap { display: flex; gap: 0.5rem 1.25rem; flex-wrap: wrap; padding-block: 0.6rem; }
 .strip b { color: var(--fg); font-weight: 500; }
 header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 1.25rem; flex-wrap: wrap; }
-.brand { display: inline-flex; align-items: center; gap: 0.75rem; text-decoration: none; }
-.brand svg { width: 1.9rem; height: 2.5rem; color: var(--fg); flex: none; }
-.brand span { font-family: var(--f-mono); font-size: var(--step--1); letter-spacing: 0.1em; text-transform: uppercase; }
+.brand { display: inline-flex; align-items: baseline; text-decoration: none; color: var(--fg); font-family: var(--f-display); font-weight: 700; font-size: 1.375rem; letter-spacing: -0.03em; }
+.hero .mark-rule { width: clamp(5rem, 11vw, 9rem); height: 0.4rem; background: var(--signal); margin-top: 1.6rem; }
 nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; font-family: var(--f-mono); font-size: var(--step--1); }
 nav a { text-decoration: none; padding-block: 0.35rem; display: inline-block; }
 nav a:hover, nav a:focus-visible { text-decoration: underline; }
@@ -140,20 +142,21 @@ nav a:hover, nav a:focus-visible { text-decoration: underline; }
 .hero { padding-block: clamp(2.5rem, 7vw, 5rem) 0; }
 .hero h1 {
   font-size: var(--step-hero);
-  font-stretch: 125%;
-  font-weight: 900;
+  font-weight: 700;
   line-height: 0.82;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.05em;
   margin-top: 1.25rem;
   margin-left: -0.04em;
   padding-bottom: 0.3em; /* room for the descender of the j */
 }
 @media (max-width: 560px) { .cmd pre { font-size: 0.78rem; padding: 0.9rem 0.8rem; } }
 .hero .tag {
-  font-family: var(--f-display); font-stretch: 112%; font-weight: 700;
+  font-family: var(--f-display); font-weight: 600;
   font-size: clamp(1.5rem, 3.6vw, 2.5rem); line-height: 1.1; margin-top: 0; letter-spacing: -0.01em;
 }
 .hero .sub { margin-top: 1rem; color: var(--muted); font-size: var(--step-1); max-width: 34ch; line-height: 1.45; }
+.hero .credit { margin-top: 1.25rem; font-family: var(--f-mono); font-size: var(--step--1); color: var(--muted); }
+.hero .credit a { color: inherit; }
 .hero-actions { margin-top: 2.25rem; display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.25rem; max-width: 720px; }
 .hero-actions > * { min-width: 0; }
 .install { border: 1px solid var(--rule); background: var(--panel); }
@@ -205,7 +208,7 @@ nav a:hover, nav a:focus-visible { text-decoration: underline; }
   padding: clamp(1.1rem, 2.6vw, 2rem) clamp(1rem, 2.6vw, 2rem);
 }
 .bar-row > * { min-width: 0; }
-.bar-row h3 { font-size: clamp(2.6rem, 8.5vw, 6.5rem); font-stretch: 125%; font-weight: 900; line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase; }
+.bar-row h3 { font-size: clamp(2.6rem, 8.5vw, 6.5rem); font-weight: 700; line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase; }
 .bar-row p { font-size: var(--step-1); line-height: 1.4; max-width: 38ch; }
 .bar-row code { font-size: 0.85em; border: 1px solid currentColor; padding: 0.05em 0.35em; }
 
@@ -233,7 +236,7 @@ nav a:hover, nav a:focus-visible { text-decoration: underline; }
 .ladder { display: grid; gap: 0.5rem; margin-top: 2.5rem; counter-reset: lv; }
 .lv { display: grid; grid-template-columns: 4.5rem minmax(0, 1fr) minmax(0, 1.2fr); gap: var(--gap); align-items: center; border: 1px solid var(--rule); padding: 1rem 1.1rem; }
 .lv > * { min-width: 0; }
-.lv .id { font-family: var(--f-display); font-stretch: 125%; font-weight: 900; font-size: 2rem; line-height: 1; }
+.lv .id { font-family: var(--f-display); font-weight: 700; font-size: 2rem; line-height: 1; }
 .lv .nm { font-weight: 700; }
 .lv .nm small { display: block; font-weight: 400; color: var(--muted); font-family: var(--f-mono); font-size: var(--step--1); }
 .lv .tx { color: var(--muted); font-size: 0.9375rem; }
@@ -282,12 +285,12 @@ nav a:hover, nav a:focus-visible { text-decoration: underline; }
 
 /* ---------- close ---------- */
 .close { padding-block: var(--section); }
-.close h2 { font-size: clamp(2.4rem, 7vw, 5.5rem); font-stretch: 125%; font-weight: 900; line-height: 0.95; letter-spacing: -0.035em; max-width: 14ch; }
+.close h2 { font-size: clamp(2.4rem, 7vw, 5.5rem); font-weight: 700; line-height: 0.95; letter-spacing: -0.035em; max-width: 14ch; }
 .close .links { margin-top: 2rem; }
 footer { border-top: 1px solid var(--rule); }
 footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content: space-between; align-items: flex-start; padding-block: 2.5rem; }
-footer .lock { width: min(15rem, 100%); color: var(--fg); }
-footer .lock svg { display: block; width: 100%; height: auto; }
+footer .lock { color: var(--fg); text-decoration: none; font-family: var(--f-display); font-weight: 700; font-size: clamp(2.2rem, 4.5vw, 3rem); letter-spacing: -0.03em; line-height: 1; }
+footer .credit { margin-top: 0.75rem; font-family: var(--f-mono); font-size: var(--step--1); color: var(--muted); max-width: 22rem; }
 footer ul { list-style: none; margin: 0; padding: 0; font-family: var(--f-mono); font-size: var(--step--1); display: grid; gap: 0.4rem; }
 footer .cols { display: flex; flex-wrap: wrap; gap: 1.5rem 4rem; }
 footer .small { width: 100%; color: var(--muted); font-family: var(--f-mono); font-size: var(--step--1); }
@@ -312,18 +315,6 @@ footer .small { width: 100%; color: var(--muted); font-family: var(--f-mono); fo
 </head>
 <body>
 
-<!-- shared logo symbols (currentColor, so they follow the theme) -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-  <symbol id="djet-mark" viewBox="189 136 341 449"><path d="M297.73 136H421.322V585H297.73V136Z" fill="currentColor"/><path d="M189 183.716H530.052V260.375H189V183.716Z" fill="currentColor"/><path d="M189 300.268H530.052V376.927H189V300.268Z" fill="currentColor"/><path d="M189 416.821H530.052V493.479H189V416.821Z" fill="currentColor"/></symbol>
-  <symbol id="djet-lockup" viewBox="0 0 1798 637">
-<path d="M139 31.5H297V605.5H139V31.5Z" fill="currentColor"/>
-<path d="M0 92.5H436V190.5H0V92.5Z" fill="currentColor"/>
-<path d="M0 241.5H436V339.5H0V241.5Z" fill="currentColor"/>
-<path d="M0 390.5H436V488.5H0V390.5Z" fill="currentColor"/>
-<path d="M543.1 308V98.6H622C640.6 98.6 656.8 102.5 670.6 110.3C684.4 118.1 695.1 129.8 702.7 145.4C710.3 160.8 714.1 180.1 714.1 203.3C714.1 226.5 710.3 245.9 702.7 261.5C695.1 276.9 684.4 288.5 670.6 296.3C656.8 304.1 640.6 308 622 308H543.1ZM588.7 267.5H622C631 267.5 638.8 265.8 645.4 262.4C652 259 657 253.8 660.4 246.8C664 239.6 665.8 230.5 665.8 219.5V187.1C665.8 175.9 664 166.8 660.4 159.8C657 152.8 652 147.6 645.4 144.2C638.8 140.8 631 139.1 622 139.1H588.7V267.5ZM756.991 98.6H866.191V247.4C866.191 260.2 863.391 271.4 857.791 281C852.391 290.6 844.491 298.1 834.091 303.5C823.891 308.7 811.591 311.3 797.191 311.3C776.591 311.3 760.591 305.9 749.191 295.1C737.991 284.3 730.891 270.1 727.891 252.5L770.491 244.1C772.091 252.9 775.091 259.7 779.491 264.5C783.891 269.1 789.591 271.4 796.591 271.4C803.191 271.4 808.791 269.3 813.391 265.1C818.191 260.9 820.591 254.3 820.591 245.3V135.2H756.991V98.6ZM1053.57 308H911.069V98.6H1053.57V139.1H956.669V182H1039.77V222.2H956.669V267.5H1053.57V308ZM1237.3 139.1H1180.6V308H1135V139.1H1078.3V98.6H1237.3V139.1Z" fill="currentColor"/>
-<path d="M610.9 578.6C592.7 578.6 577.1 575.4 564.1 569C551.3 562.6 540.4 554.5 531.4 544.7L561.4 514.4C568.4 522.4 576.3 528.4 585.1 532.4C594.1 536.4 603.7 538.4 613.9 538.4C625.1 538.4 633.4 536.1 638.8 531.5C644.2 526.9 646.9 520.8 646.9 513.2C646.9 509.4 646.2 506 644.8 503C643.6 499.8 641.2 497.2 637.6 495.2C634.2 493 629.2 491.5 622.6 490.7L601.9 488C587.3 486 575.2 482.4 565.6 477.2C556.2 471.8 549.2 464.8 544.6 456.2C540 447.4 537.7 437.2 537.7 425.6C537.7 413 540.8 402 547 392.6C553.4 383 562.4 375.5 574 370.1C585.8 364.7 599.9 362 616.3 362C632.1 362 646 364.6 658 369.8C670 374.8 680.3 382 688.9 391.4L658.6 422C653.6 416.2 647.5 411.5 640.3 407.9C633.3 404.1 624.4 402.2 613.6 402.2C603.4 402.2 595.8 404 590.8 407.6C585.8 411.2 583.3 416.2 583.3 422.6C583.3 427.4 584.1 431.3 585.7 434.3C587.5 437.3 590.2 439.6 593.8 441.2C597.6 442.8 602.4 444.1 608.2 445.1L628.9 448.4C643.3 450.6 655.2 454.3 664.6 459.5C674 464.7 681 471.5 685.6 479.9C690.2 488.3 692.5 498.5 692.5 510.5C692.5 523.9 689.3 535.7 682.9 545.9C676.7 556.1 667.5 564.1 655.3 569.9C643.1 575.7 628.3 578.6 610.9 578.6ZM801.107 491L824.207 417.5H865.607L805.007 599.3C802.407 607.3 799.007 613.9 794.807 619.1C790.807 624.5 785.707 628.5 779.507 631.1C773.307 633.7 765.707 635 756.707 635H729.107V600.5H758.807L764.207 583.1L709.007 417.5H753.107L776.207 491L787.607 536.6H789.407L801.107 491ZM938.924 578.6C923.724 578.6 910.924 576.2 900.524 571.4C890.124 566.4 880.824 559.4 872.624 550.4L898.724 524C904.324 530.2 910.524 535.1 917.324 538.7C924.124 542.3 931.824 544.1 940.424 544.1C949.224 544.1 955.324 542.8 958.724 540.2C962.124 537.4 963.824 533.7 963.824 529.1C963.824 525.1 962.524 522.1 959.924 520.1C957.524 518.1 953.524 516.7 947.924 515.9L930.824 513.8C919.024 512.2 909.124 509.4 901.124 505.4C893.324 501.4 887.424 496.1 883.424 489.5C879.624 482.7 877.724 474.6 877.724 465.2C877.724 450 883.224 437.7 894.224 428.3C905.224 418.7 920.124 413.9 938.924 413.9C949.924 413.9 959.224 414.9 966.824 416.9C974.424 418.7 981.024 421.5 986.624 425.3C992.424 428.9 997.924 433.3 1003.12 438.5L977.624 464.6C972.624 459.6 966.924 455.7 960.524 452.9C954.324 449.9 947.924 448.4 941.324 448.4C933.924 448.4 928.524 449.6 925.124 452C921.924 454.4 920.324 457.6 920.324 461.6C920.324 465.8 921.424 469.1 923.624 471.5C926.024 473.7 930.424 475.3 936.824 476.3L954.524 478.7C971.724 480.9 984.624 486 993.224 494C1002.02 501.8 1006.42 512.5 1006.42 526.1C1006.42 536.1 1003.62 545.1 998.024 553.1C992.424 561.1 984.524 567.4 974.324 572C964.324 576.4 952.524 578.6 938.924 578.6ZM1115.95 575H1089.55C1074.35 575 1062.75 571.1 1054.75 563.3C1046.75 555.5 1042.75 544.1 1042.75 529.1V452H1020.55V417.5H1031.65C1037.65 417.5 1041.75 416.1 1043.95 413.3C1046.15 410.3 1047.25 406.1 1047.25 400.7V374.9H1087.15V417.5H1118.35V452H1087.15V540.5H1115.95V575ZM1213.72 578.6C1197.72 578.6 1184.02 575.3 1172.62 568.7C1161.42 561.9 1152.82 552.3 1146.82 539.9C1141.02 527.5 1138.12 512.9 1138.12 496.1C1138.12 479.5 1140.92 465.1 1146.52 452.9C1152.32 440.5 1160.72 430.9 1171.72 424.1C1182.72 417.3 1196.12 413.9 1211.92 413.9C1229.32 413.9 1243.32 417.7 1253.92 425.3C1264.72 432.7 1272.62 442.5 1277.62 454.7C1282.62 466.9 1285.12 480.1 1285.12 494.3V507.5H1184.02V509.9C1184.02 520.3 1186.82 528.6 1192.42 534.8C1198.22 540.8 1207.02 543.8 1218.82 543.8C1228.22 543.8 1235.72 541.9 1241.32 538.1C1247.12 534.3 1252.52 529.9 1257.52 524.9L1279.72 552.5C1272.72 560.5 1263.52 566.9 1252.12 571.7C1240.92 576.3 1228.12 578.6 1213.72 578.6ZM1212.82 446.6C1206.82 446.6 1201.62 448 1197.22 450.8C1193.02 453.4 1189.72 457.1 1187.32 461.9C1185.12 466.7 1184.02 472.4 1184.02 479V481.4H1239.22V478.7C1239.22 472.3 1238.22 466.7 1236.22 461.9C1234.42 457.1 1231.52 453.4 1227.52 450.8C1223.72 448 1218.82 446.6 1212.82 446.6ZM1360.88 575H1316.48V417.5H1360.88V444.2H1362.68C1365.48 435.8 1370.28 428.7 1377.08 422.9C1384.08 416.9 1393.38 413.9 1404.98 413.9C1415.78 413.9 1424.98 416.6 1432.58 422C1440.18 427.4 1445.68 435.3 1449.08 445.7H1449.98C1452.78 436.9 1458.48 429.4 1467.08 423.2C1475.68 417 1485.98 413.9 1497.98 413.9C1513.18 413.9 1524.78 419.4 1532.78 430.4C1540.98 441.2 1545.08 456.5 1545.08 476.3V575H1500.68V479.9C1500.68 469.7 1498.88 462.2 1495.28 457.4C1491.88 452.4 1486.48 449.9 1479.08 449.9C1474.68 449.9 1470.48 450.8 1466.48 452.6C1462.48 454.2 1459.18 456.7 1456.58 460.1C1454.18 463.5 1452.98 467.8 1452.98 473V575H1408.58V479.9C1408.58 469.7 1406.78 462.2 1403.18 457.4C1399.58 452.4 1394.18 449.9 1386.98 449.9C1382.78 449.9 1378.68 450.8 1374.68 452.6C1370.68 454.2 1367.38 456.7 1364.78 460.1C1362.18 463.5 1360.88 467.8 1360.88 473V575ZM1637.95 578.6C1622.75 578.6 1609.95 576.2 1599.55 571.4C1589.15 566.4 1579.85 559.4 1571.65 550.4L1597.75 524C1603.35 530.2 1609.55 535.1 1616.35 538.7C1623.15 542.3 1630.85 544.1 1639.45 544.1C1648.25 544.1 1654.35 542.8 1657.75 540.2C1661.15 537.4 1662.85 533.7 1662.85 529.1C1662.85 525.1 1661.55 522.1 1658.95 520.1C1656.55 518.1 1652.55 516.7 1646.95 515.9L1629.85 513.8C1618.05 512.2 1608.15 509.4 1600.15 505.4C1592.35 501.4 1586.45 496.1 1582.45 489.5C1578.65 482.7 1576.75 474.6 1576.75 465.2C1576.75 450 1582.25 437.7 1593.25 428.3C1604.25 418.7 1619.15 413.9 1637.95 413.9C1648.95 413.9 1658.25 414.9 1665.85 416.9C1673.45 418.7 1680.05 421.5 1685.65 425.3C1691.45 428.9 1696.95 433.3 1702.15 438.5L1676.65 464.6C1671.65 459.6 1665.95 455.7 1659.55 452.9C1653.35 449.9 1646.95 448.4 1640.35 448.4C1632.95 448.4 1627.55 449.6 1624.15 452C1620.95 454.4 1619.35 457.6 1619.35 461.6C1619.35 465.8 1620.45 469.1 1622.65 471.5C1625.05 473.7 1629.45 475.3 1635.85 476.3L1653.55 478.7C1670.75 480.9 1683.65 486 1692.25 494C1701.05 501.8 1705.45 512.5 1705.45 526.1C1705.45 536.1 1702.65 545.1 1697.05 553.1C1691.45 561.1 1683.55 567.4 1673.35 572C1663.35 576.4 1651.55 578.6 1637.95 578.6ZM1759.18 578.3C1750.18 578.3 1743.48 576 1739.08 571.4C1734.88 566.8 1732.78 561.1 1732.78 554.3V548.3C1732.78 541.3 1734.88 535.6 1739.08 531.2C1743.48 526.6 1750.18 524.3 1759.18 524.3C1768.18 524.3 1774.78 526.6 1778.98 531.2C1783.38 535.6 1785.58 541.3 1785.58 548.3V554.3C1785.58 561.1 1783.38 566.8 1778.98 571.4C1774.78 576 1768.18 578.3 1759.18 578.3Z" fill="currentColor"/>
-</symbol>
-</svg>
 
 <a class="skip" href="#main">Skip to content</a>
 
@@ -334,10 +325,7 @@ footer .small { width: 100%; color: var(--muted); font-family: var(--f-mono); fo
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="https://djet.online" aria-label="DJET Systems home">
-      <svg aria-hidden="true"><use href="#djet-mark"/></svg>
-      <span>DJET Systems</span>
-    </a>
+    <a class="brand" href="./" aria-label="jig home">jig</a>
     <nav aria-label="Primary">
       <ul>
         <li><a href="#how">How it works</a></li>
@@ -345,7 +333,6 @@ footer .small { width: 100%; color: var(--muted); font-family: var(--f-mono); fo
         <li><a href="#roadmap">Roadmap</a></li>
         <li><a href="docs/">Docs</a></li>
         <li><a href="https://github.com/ansgrb/jig">GitHub</a></li>
-        <li><a href="https://djet.online">djet.online ↗</a></li>
       </ul>
     </nav>
   </div>
@@ -358,8 +345,10 @@ footer .small { width: 100%; color: var(--muted); font-family: var(--f-mono); fo
   <div class="wrap">
     <p class="label">// Native toolchain</p>
     <h1 id="h-title">jig</h1>
-    <p class="tag">The native C/C++ toolchain.</p>
+    <div class="mark-rule" aria-hidden="true"></div>
+    <p class="tag" style="margin-top:1.6rem">The native C/C++ toolchain.</p>
     <p class="sub">Pin the compiler. Pick the standard. Build in an environment that belongs to the project.</p>
+    <p class="credit">An open source contribution from DJET Systems · GPL-3.0-only.</p>
 
     <div class="hero-actions">
       <div class="install" id="install">
@@ -379,7 +368,7 @@ footer .small { width: 100%; color: var(--muted); font-family: var(--f-mono); fo
         <p class="fine">No sudo. Prints every URL. Verifies the download before it installs.</p>
       </div>
       <div class="links">
-        <a class="btn solid" href="docs/getting-started/">Get started</a>
+        <a class="btn solid" href="docs/getting-started.html">Get started</a>
         <a class="btn" href="docs/">Read the docs</a>
         <a class="btn" href="https://github.com/ansgrb/jig">Source on GitHub</a>
       </div>
@@ -650,23 +639,27 @@ sha256  = "…"</pre>
 <!-- ================= CLOSE ================= -->
 <div class="close">
   <div class="wrap">
-    <p class="label">// DJET Systems</p>
+    <p class="label">// Open source</p>
     <h2 style="margin-top:1rem">Some software launches. Some software lasts.</h2>
+    <p class="measure dim" style="margin-top:1.5rem">jig is GPL-3.0-only and lives in the open. It is built and maintained as an open source contribution from DJET Systems — take it, read it, change it, ship it with us.</p>
     <div class="links">
-      <a class="btn solid" href="docs/getting-started/">Get started</a>
-      <a class="btn" href="https://djet.online#contact">Start a conversation</a>
+      <a class="btn solid" href="docs/getting-started.html">Get started</a>
+      <a class="btn" href="https://github.com/ansgrb/jig">Source on GitHub</a>
     </div>
   </div>
 </div>
 
 <footer>
   <div class="wrap">
-    <a class="lock" href="https://djet.online" aria-label="DJET Systems"><svg role="img" aria-label="DJET Systems"><use href="#djet-lockup"/></svg></a>
+    <div>
+      <a class="lock" href="./" aria-label="jig home">jig</a>
+      <p class="credit">An open source contribution from DJET Systems. <a href="https://djet.online">djet.online ↗</a></p>
+    </div>
     <div class="cols">
       <ul aria-label="jig">
         <li><a href="docs/">Documentation</a></li>
-        <li><a href="docs/reference/cli/">CLI reference</a></li>
-        <li><a href="docs/reference/errors/">Error codes</a></li>
+        <li><a href="docs/cli.html">CLI reference</a></li>
+        <li><a href="docs/errors.html">Error codes</a></li>
         <li><a href="https://github.com/ansgrb/jig/blob/main/LICENSE">GPL-3.0-only</a></li>
         <li><a href="https://github.com/ansgrb/jig">GitHub</a></li>
       </ul>

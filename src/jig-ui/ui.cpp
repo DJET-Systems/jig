@@ -5,6 +5,7 @@
 // each branch reuses the name `x` on purpose, so -Wshadow is noise in this one file.
 #pragma GCC diagnostic ignored "-Wshadow"
 
+#include <cctype>
 #include <cstdio>
 #include <cstdlib>
 
@@ -24,6 +25,44 @@ struct Glyphs {
 };
 constexpr Glyphs kUnicode{"\xE2\x96\xB8", "\xE2\x97\x86", "\xE2\x94\x82", "\xE2\x9C\x93", "!", "\xE2\x9C\x97"};
 constexpr Glyphs kAscii{">", "*", "|", "ok", "!", "x"};
+
+// The word mark: full-block lowercase, drawn on a pixel grid. One signal per view.
+constexpr const char* kFrontUnicode =
+    "      \xE2\x96\x88\xE2\x96\x88 \xE2\x96\x88\xE2\x96\x88\xE2\x96\x88\xE2\x96\x88  \xE2\x96\x88\xE2\x96\x88\xE2\x96\x88\xE2\x96\x88\xE2\x96\x88\xE2\x96\x88\n"
+    "      \xE2\x96\x88\xE2\x96\x88  \xE2\x96\x88\xE2\x96\x88  \xE2\x96\x88\xE2\x96\x88    \xE2\x96\x88\xE2\x96\x88\n"
+    "      \xE2\x96\x88\xE2\x96\x88  \xE2\x96\x88\xE2\x96\x88  \xE2\x96\x88\xE2\x96\x88\n"
+    "      \xE2\x96\x88\xE2\x96\x88  \xE2\x96\x88\xE2\x96\x88  \xE2\x96\x88\xE2\x96\x88   \xE2\x96\x88\xE2\x96\x88\xE2\x96\x88\xE2\x96\x88\n"
+    "\xE2\x96\x88\xE2\x96\x88    \xE2\x96\x88\xE2\x96\x88  \xE2\x96\x88\xE2\x96\x88  \xE2\x96\x88\xE2\x96\x88    \xE2\x96\x88\xE2\x96\x88\n"
+    "\xE2\x96\x88\xE2\x96\x88    \xE2\x96\x88\xE2\x96\x88  \xE2\x96\x88\xE2\x96\x88  \xE2\x96\x88\xE2\x96\x88    \xE2\x96\x88\xE2\x96\x88\n"
+    " \xE2\x96\x88\xE2\x96\x88\xE2\x96\x88\xE2\x96\x88\xE2\x96\x88\xE2\x96\x88  \xE2\x96\x88\xE2\x96\x88\xE2\x96\x88\xE2\x96\x88  \xE2\x96\x88\xE2\x96\x88\xE2\x96\x88\xE2\x96\x88\xE2\x96\x88\xE2\x96\x88\n";
+constexpr const char* kFrontAscii =
+    "      ## ####  ######\n"
+    "      ##  ##  ##    ##\n"
+    "      ##  ##  ##\n"
+    "      ##  ##  ##   ####\n"
+    "##    ##  ##  ##    ##\n"
+    "##    ##  ##  ##    ##\n"
+    " #####  ####  ######\n";
+
+bool no_color_allowed() {
+    auto v = getenv_str("NO_COLOR");
+    return v.has_value() && !v->empty();
+}
+
+bool term_truecolor() {
+    auto v = getenv_str("COLORTERM");
+    if (!v) return false;
+    std::string s = *v;
+    for (char& c : s) c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
+    return s.find("truecolor") != std::string::npos || s.find("24bit") != std::string::npos;
+}
+
+bool term_256() {
+    auto t = getenv_str("TERM");
+    return t && t->find("256color") != std::string::npos;
+}
+
+bool term_is_dumb() { return getenv_str("TERM").value_or("") == "dumb"; }
 
 std::string pad(const std::string& s, std::size_t width) {
     if (s.size() >= width) return s + " ";
@@ -74,10 +113,9 @@ std::string json_escape(const std::string& s) {
 }
 
 Ui::Ui(const Settings& s) : s_(s) {
-    bool no_color_env = getenv_str("NO_COLOR").has_value() && !getenv_str("NO_COLOR")->empty();
     if (s_.color == "always") color_ = true;
     else if (s_.color == "never") color_ = false;
-    else color_ = stderr_is_tty() && !no_color_env && getenv_str("TERM").value_or("") != "dumb";
+    else color_ = stderr_is_tty() && !no_color_allowed() && !term_is_dumb();
     unicode_ = locale_is_utf8();
 }
 
@@ -90,6 +128,22 @@ std::string Ui::dim(const std::string& s) const { return wrap("2", s); }
 std::string Ui::green(const std::string& s) const { return wrap("32", s); }
 std::string Ui::yellow(const std::string& s) const { return wrap("33", s); }
 std::string Ui::red(const std::string& s) const { return wrap("31", s); }
+
+// The brand signal, identity 02: one element per view, #FF5A1F (256-code 202 when the
+// terminal cannot agree on true colour). Reuses the --color rules, judged on stdout,
+// because the front mark prints there rather than on stderr.
+std::string Ui::signal(const std::string& s) const {
+    if (s_.color == "never") return s;
+    bool on = s_.color == "always" || (stdout_is_tty() && !no_color_allowed() && !term_is_dumb());
+    if (!on) return s;
+    if (term_truecolor()) return wrap("38;2;255;90;31", s);
+    if (term_256()) return wrap("38;5;202", s);
+    return s;
+}
+
+std::string Ui::front() const {
+    return signal(unicode_ ? kFrontUnicode : kFrontAscii);
+}
 
 void Ui::write_err(const std::string& s) const {
     std::fputs(s.c_str(), stderr);
